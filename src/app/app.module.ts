@@ -22,7 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -30,46 +30,36 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ExaminationsComponent } from './components/examinations/examinations.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSortModule } from '@angular/material/sort';
 const materials = [
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatCardModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  ReactiveFormsModule,
-  MatInputModule,
-  MatIconModule,
-  MatMenuModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatSortModule,
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    ProfileComponent,
-    LoginComponent,
-    RegisterComponent,
-    LogoutComponent,
-    ExaminationsComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ...materials,
-    FlexLayoutModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent, DashboardComponent, ProfileComponent, LoginComponent, RegisterComponent, LogoutComponent, ExaminationsComponent],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ...materials, FlexLayoutModule, HttpClientModule],
+    providers: [],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,0 +1,41 @@
+.title-text {
+    margin-top: 20px;
+}
+
+.container {
+    width: 100%;
+    height: calc(100vh - 64px);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 212, 255, 1) 70%);
+}
+.form-container {
+    width: 564px;
+    min-width: 650px;
+    min-height: 600px;
+    border: 1px solid #a7a7e0;
+    border-radius: 5px;
+    background: #fff;
+}
+
+form {
+    width: 540px !important;
+    margin-top: 20px;
+}
+
+:host ::ng-deep .mat-mdc-text-field-wrapper {
+    width: 250px !important;
+}
+
+.footer button {
+    width: 120px !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+.footer-down {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+}

@@ -1,1 +1,79 @@
-<p>register works!</p>
+<div class="container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="30px">
+    <div class="form-container">
+        <div class="title-text" fxLayoutAlign="center center">
+            <h1 class="title login">Sign Up</h1>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center start">
+            <form [formGroup]="signupForm" fxLayout="column" fxLayoutAlign="start center">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" style="margin-right: 12px">
+                        <mat-label>First Name</mat-label>
+                        <input matInput type="text" formControlName="firstName" required />
+                        <mat-error *ngIf="signupForm.get('firstName')?.errors?.['required']">First Name is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput type="text" formControlName="lastName" required />
+                        <mat-error *ngIf="signupForm.get('lastName')?.errors?.['required']">Last Name is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" style="margin-right: 12px">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" required />
+                        <mat-error *ngIf="signupForm.get('email')?.errors?.['required']">email is required</mat-error>
+                        <mat-error *ngIf="signupForm.get('email')?.errors?.['email']">invalid email format</mat-error>
+                        <mat-error *ngIf="signupForm.get('email')?.errors?.['uniqueEmailError']">email already exists!</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" formControlName="password" required />
+                        <mat-error *ngIf="signupForm.get('password')?.errors?.['required']">password is required</mat-error>
+                        <mat-error *ngIf="signupForm.get('password')?.errors?.['minlength']">minimum 6 characters needed</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" style="margin-right: 12px">
+                        <mat-label>City</mat-label>
+                        <input matInput type="text" formControlName="city" required />
+                        <mat-error *ngIf="signupForm.get('city')?.errors?.['required']">city is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Zip</mat-label>
+                        <input matInput type="text" formControlName="zip" required />
+                        <mat-error *ngIf="signupForm.get('zip')?.errors?.['required']">zip is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" style="margin-right: 12px">
+                        <mat-label>Apartment</mat-label>
+                        <input matInput type="text" formControlName="apartment" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Street</mat-label>
+                        <input matInput type="text" formControlName="street" />
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" style="margin-right: 12px">
+                        <mat-label>Division</mat-label>
+                        <input matInput type="text" formControlName="division" required />
+                        <mat-error *ngIf="signupForm.get('division')?.errors?.['required']">division is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Country</mat-label>
+                        <input matInput type="text" formControlName="country" required />
+                        <mat-error *ngIf="signupForm.get('country')?.errors?.['required']">country is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" style="margin-right: 70px">
+            <button mat-stroked-button color="accent" (click)="homepage()">CANCEL</button>
+            <button mat-raised-button color="primary" (click)="register()" [disabled]="!signupForm.valid">SAVE</button>
+        </div>
+        <div class="footer-down" fxLayout="row" fxLayoutAlign="center center">
+            <span>Already have Account? <a href="/login">Login</a></span>
+        </div>
+    </div>
+</div>

@@ -1,56 +1,51 @@
 <div>
-  <div>
-    <mat-toolbar
-      color="primary"
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
-    >
-      <span class="title">Department Registration</span>
-      <div class="topmenu">
-        <button mat-button routerLink="dashboard">Dashboard</button>
-        <button mat-button routerLink="examination">Examination</button>
-        <button mat-button routerLink="admin">Admin</button>
-      </div>
-      <div class="profile-trigger">
-        <ng-container *ngIf="isAuthenticated; else entry"></ng-container>
-        <ng-template #entry>
-          <button mat-icon-button [matMenuTriggerFor]="account">
-            <mat-icon>account_circle</mat-icon>
-          </button>
-          <mat-menu #account="matMenu">
-            <div
-              fxLayout="column"
-              fxLayoutAlign="start stretch"
-              fxLayoutGap="12px"
-              style="width: 140px"
-            >
-              <button
-                mat-button
-                color="accent"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                routerLink="login"
-              >
-                <mat-icon fxFlex="35">login</mat-icon>
-                <span>Login</span>
-              </button>
-              <button
-                mat-button
-                color="accent"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                routerLink="register"
-              >
-                <mat-icon fxFlex="35">person_add</mat-icon>
-                <span>Register</span>
-              </button>
+    <div>
+        <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title">Department Registration</span>
+            <div class="topmenu">
+                <button mat-button routerLink="dashboard">Dashboard</button>
+                <button mat-button routerLink="examination">Examination</button>
+                <button mat-button routerLink="admin">Admin</button>
             </div>
-          </mat-menu>
-        </ng-template>
-      </div>
-    </mat-toolbar>
-  </div>
-  <div>
-    <router-outlet></router-outlet>
-  </div>
+            <div class="profile-trigger">
+                <ng-container *ngIf="isAuthenticated; else entry">
+                    <button mat-icon-button [matMenuTriggerFor]="account">
+                        <mat-icon>account_circle</mat-icon>
+                    </button>
+                    <mat-menu #account="matMenu">
+                        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" style="width: 140px">
+                            <button mat-button color="accent" fxLayout="row" fxLayoutAlign="start center" routerLink="profile">
+                                <mat-icon fxFlex="35">mood</mat-icon>
+                                <span>{{ profileData.firstName }}</span>
+                            </button>
+                            <button mat-button color="accent" fxLayout="row" fxLayoutAlign="start center" (click)="logout()">
+                                <mat-icon fxFlex="35">logout</mat-icon>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    </mat-menu>
+                </ng-container>
+                <ng-template #entry>
+                    <button mat-icon-button [matMenuTriggerFor]="account">
+                        <mat-icon>account_circle</mat-icon>
+                    </button>
+                    <mat-menu #account="matMenu">
+                        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" style="width: 140px">
+                            <button mat-button color="accent" fxLayout="row" fxLayoutAlign="start center" routerLink="login">
+                                <mat-icon fxFlex="35">login</mat-icon>
+                                <span>Login</span>
+                            </button>
+                            <button mat-button color="accent" fxLayout="row" fxLayoutAlign="start center" routerLink="register">
+                                <mat-icon fxFlex="35">person_add</mat-icon>
+                                <span>Register</span>
+                            </button>
+                        </div>
+                    </mat-menu>
+                </ng-template>
+            </div>
+        </mat-toolbar>
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
 </div>

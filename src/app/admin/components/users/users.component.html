@@ -1,0 +1,17 @@
+<table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange($event)">
+    <ng-container [matColumnDef]="column.field" *ngFor="let column of columnDefs; let i = index">
+        <th mat-header-cell [disabled]="!column.sortable" [mat-sort-header]="column.sortable ? column.field : ''" *matHeaderCellDef>
+            {{ column.label }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+            {{ element[column.field] }}
+            <!-- <span *ngIf="!column.type">{{ element[column.field] }}</span>
+            <span *ngIf="column.type === 'role'">{{ element[column.field] }}</span> -->
+        </td>
+    </ng-container>
+    <ng-container [matColumnDef]="column.field" *ngFor="let column of columnSearchDefs; let i = index"> </ng-container>
+
+    <thead>
+        <tr class="table-main-header" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    </thead>
+</table>
