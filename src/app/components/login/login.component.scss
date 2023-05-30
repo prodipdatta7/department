@@ -1,0 +1,21 @@
+.container {
+    width: 100%;
+    height: calc(100vh - 64px);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 0%, rgba(0, 212, 255, 1) 70%);
+}
+.title {
+    margin-top: 20px;
+}
+.form-container {
+    width: 500px;
+    min-width: 500px;
+    min-height: 500px;
+    border: 1px solid #a7a7e0;
+    border-radius: 5px;
+    background: #fff;
+}
+
+form {
+    width: 320px !important;
+    margin-top: 40px;
+}
