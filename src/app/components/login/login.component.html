@@ -1,0 +1,29 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+    <div fxLayout="column" fxLayoutAlign="start center" class="form-container">
+        <div>
+            <h1 class="title">Login</h1>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutgap="12px">
+            <form [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="start stretch">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email" />
+                    <mat-icon matPrefix color="primary">mail</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
+                    <mat-icon matPrefix color="primary">lock</mat-icon>
+                    <button mat-icon-button matSuffix (click)="hide = !hide">
+                        <mat-icon color="warn">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </form>
+            <div fxlayout="row" fxLayoutAlign="space-between start" fxFill>
+                <button fxFlex="45%" type="submit" [disabled]="loginForm.invalid" mat-raised-button color="primary">SUBMIT</button>
+                <button fxFlex="45%" type="submit" mat-stroked-button color="warn">BACK</button>
+            </div>
+        </div>
+        <div></div>
+    </div>
+</div>
