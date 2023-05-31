@@ -11,18 +11,32 @@ import { UserService } from 'src/app/services/user.service';
 export class UsersComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     userList: any = [];
-    dataSource: any = [];
+    dataSource: any = [
+        {
+            firstName: 'Prodip',
+            lastName: 'Datta',
+            email: 'erytry',
+            city: 'urieie',
+            zip: 'dffd',
+            street: 'gfg',
+            apartment: 'apartment',
+            division: 'errt',
+            country: 'sdgfdg',
+            isAdmin: true,
+        },
+    ];
+    dataLoaded = false;
     columnDefs = [
-        { field: 'firstName', label: 'First Name', filter: true, sortable: true, type: null },
-        { field: 'lastName', label: 'Last Name', filter: true, sortable: true, type: null },
-        { field: 'email', label: 'Email', filter: true, sortable: true, type: null },
-        { field: 'city', label: 'City', filter: true, sortable: true, type: null },
-        { field: 'zip', label: 'Zip', filter: true, sortable: true, type: null },
-        { field: 'street', label: 'Street', filter: true, sortable: true, type: null },
-        { field: 'apartment', label: 'Apartment', filter: true, sortable: true, type: null },
-        { field: 'division', label: 'Division', filter: true, sortable: true, type: null },
-        { field: 'country', label: 'Country', filter: true, sortable: true, type: null },
-        { field: 'isAdmin', label: 'isAdmin', filter: false, sortable: false, type: 'role' },
+        { field: 'firstName', label: 'First Name', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'lastName', label: 'Last Name', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'email', label: 'Email', filter: true, sortable: true, type: null, width: '200px' },
+        { field: 'city', label: 'City', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'zip', label: 'Zip', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'street', label: 'Street', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'apartment', label: 'Apartment', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'division', label: 'Division', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'country', label: 'Country', filter: true, sortable: true, type: null, width: '100px' },
+        { field: 'isAdmin', label: 'isAdmin', filter: false, sortable: false, type: 'role', width: '100px' },
     ];
     columnSearchDefs: any = [];
     displayedColumns: any = [];
@@ -31,7 +45,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     orderByData: any;
     constructor(private userService: UserService) {}
     ngOnInit(): void {
-        this.getUserList();
         this.columnDefs.forEach((column) => {
             const clmn = JSON.parse(JSON.stringify(column));
             clmn.field = clmn.field + '_filter';
@@ -43,6 +56,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             this.displayedColumns.push(column.field);
             this.displayedSearchColumns.push(clmn.field);
         });
+        this.getUserList();
     }
     setAndSubscribe(column: any) {
         column['subscription'] = column.input.valueChanges.pipe(debounceTime(700), distinctUntilChanged()).subscribe((value: any) => {
@@ -69,6 +83,7 @@ export class UsersComponent implements OnInit, OnDestroy {
                 if (response && response.success) {
                     this.userList = response.data;
                     this.prepareModel();
+                    this.dataLoaded = true;
                     console.log(this.userList);
                 }
             })

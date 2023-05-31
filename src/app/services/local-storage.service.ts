@@ -7,12 +7,14 @@ export class LocalStorageService {
     constructor() {}
 
     setToken(value: any) {
-        localStorage.setItem('token', JSON.stringify(value));
+        if (value === null) localStorage.removeItem('token');
+        else localStorage.setItem('token', JSON.stringify(value));
     }
     getToken() {
         return localStorage.getItem('token');
     }
     setLoggedInUserData(data: any) {
+        if (data === null) localStorage.removeItem('user');
         localStorage.setItem('user', JSON.stringify(data));
     }
     getLoggedInUserData() {

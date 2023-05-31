@@ -1,0 +1,19 @@
+.mat-sidenav {
+    width: 200px !important;
+    border-right: 1px solid #f1f1f1;
+}
+
+.mat-sidenav-content {
+    height: calc(100vh - 104px);
+    width: calc(100vw - 40px);
+    padding: 20px;
+    overflow-x: scroll;
+}
+
+a {
+    text-decoration: none;
+}
+
+.admin-menu {
+    padding: 12px 0 12px 20px;
+}

@@ -24,6 +24,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSortModule } from '@angular/material/sort';
+import { AdminRootComponent } from './components/admin-root/admin-root.component';
 
 const materials = [
     MatAutocompleteModule,
@@ -50,7 +51,7 @@ const materials = [
 ];
 
 @NgModule({
-    declarations: [UsersComponent],
+    declarations: [UsersComponent, AdminRootComponent],
     imports: [CommonModule, AdminRoutingModule, FlexLayoutModule, ...materials],
 })
 export class AdminModule {}

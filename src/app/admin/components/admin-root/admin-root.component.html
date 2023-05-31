@@ -1,0 +1,18 @@
+<div fxLayout="row" fxLayoutAlign="start start">
+    <div class="mat-sidenav">
+        <div fxLayout="column" fxlayoutAlign="start center" fxFlex="100">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <h2>Admin</h2>
+            </div>
+            <div fxLayout="column" fxlayoutAlign="start center" fxFlex="100">
+                <div class="admin-menu" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                    <mat-icon color="primary">list</mat-icon>
+                    <a routerLink="user">Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mat-sidenav-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

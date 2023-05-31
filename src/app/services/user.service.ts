@@ -19,7 +19,7 @@ export class UserService {
 
     isStillAuthentic(): Boolean {
         const token = this.localStorage.getToken();
-        if (token) {
+        if (Boolean(token)) {
             const parsedToken = this.parseJwt(token);
             if (!this._tokenExpired(parsedToken.exp)) {
                 return true;
@@ -46,7 +46,7 @@ export class UserService {
     }
     getUserData() {
         const token = localStorage.getItem('token');
-        if (token) {
+        if (Boolean(token)) {
             const parsedToken = this.parseJwt(token);
             if (!this._tokenExpired(parsedToken.exp)) {
                 const rawData = localStorage.getItem('user');
@@ -61,6 +61,7 @@ export class UserService {
         return Math.floor(new Date().getTime() / 1000) >= expiration;
     }
     private parseJwt(token: any) {
+        if (!token) return;
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const jsonPayload = decodeURIComponent(
