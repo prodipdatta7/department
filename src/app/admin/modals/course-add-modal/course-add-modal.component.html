@@ -1,0 +1,61 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="28px" class="dialog">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="title">{{ data.title }}</span>
+        <button mat-icon-button color="warn" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start space-between" fxLayoutGap="8px" fxFlex="100">
+        <form [formGroup]="courseForm" fxLayout="column" fxLayoutAlign="start stretch">
+            <div fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="8px" fxFlex="100">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Code</mat-label>
+                    <input matInput type="text" formControlName="courseCode" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" formControlName="courseName" />
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" fxFlex="100">
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Credits</mat-label>
+                    <input matInput type="number" formControlName="courseCredits" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Contact Hours</mat-label>
+                    <input matInput type="number" formControlName="courseContactHours" />
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" fxFlex="100">
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Coverage Semester</mat-label>
+                    <input matInput [matAutocomplete]="semester" type="text" formControlName="courseCoverageSemester" />
+                    <mat-autocomplete #semester="matAutocomplete">
+                        <mat-option *ngFor="let semester of SEMESTERS" [value]="semester">
+                            <span>{{ semester }}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Coverage Department</mat-label>
+                    <input matInput [matAutocomplete]="department" type="text" formControlName="courseCoverageDepartment" />
+                    <mat-autocomplete #department="matAutocomplete">
+                        <mat-option *ngFor="let department of DEPARTMENTS" [value]="department">
+                            <span>{{ department }}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </form>
+        <div *ngIf="actionFailed" fxFlex="100" fxLayout="row" fxLayoutAlign="start center" class="warning">
+            <span>Failed to {{ data.addButton }}</span>
+        </div>
+    </div>
+    <div class="footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+        <button mat-button color="warn" (click)="onClose()">{{ data.cancelButton }}</button>
+        <button [disabled]="!courseForm.valid" mat-raised-button color="primary" (click)="onSave()">
+            {{ data.addButton }}
+        </button>
+    </div>
+</div>

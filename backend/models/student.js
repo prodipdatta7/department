@@ -1,56 +1,47 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        studentId: {
+            type: String,
+            required: true,
+        },
+        phone: {
+            type: String,
+            required: true,
+        },
+        department: {
+            type: String,
+            required: true,
+        },
+        session: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+            default: '-',
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false,
+        },
     },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    city: {
-        type: String,
-        required: true,
-    },
-    division : {
-        type: String,
-        required: true,
-    },
-    street: {
-        type: String,
-        default: '',
-    },
-    apartment: {
-        type: String,
-        default: '',
-    },
-    zip: {
-        type: String,
-        required: true,
-    },
-    country: {
-        type: String,
-        required: true
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-      required: true
+    {
+        timestamps: true,
     }
-  },
-  {
-    timestamps: true,
-  }
 );
 
 const Student = mongoose.model('Student', userSchema);

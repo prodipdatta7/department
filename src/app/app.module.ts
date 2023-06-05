@@ -23,7 +23,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexModule } from '@angular/flex-layout';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LoginComponent } from './components/login/login.component';
@@ -57,8 +57,17 @@ const materials = [
 ];
 
 @NgModule({
-    declarations: [AppComponent, DashboardComponent, ProfileComponent, LoginComponent, RegisterComponent, LogoutComponent, ExaminationsComponent],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ...materials, FlexLayoutModule, HttpClientModule],
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        ProfileComponent,
+        LoginComponent,
+        RegisterComponent,
+        LogoutComponent,
+        ExaminationsComponent,
+    ],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ...materials, FlexModule, HttpClientModule],
+    exports: [ProfileComponent],
     providers: [],
     bootstrap: [AppComponent],
 })

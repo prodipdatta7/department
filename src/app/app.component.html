@@ -16,7 +16,7 @@
                         <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" style="width: 140px">
                             <button mat-button color="accent" fxLayout="row" fxLayoutAlign="start center" routerLink="profile">
                                 <mat-icon fxFlex="35">mood</mat-icon>
-                                <span>{{ profileData.firstName }}</span>
+                                <span class="text-truncation">{{ profileData.name }}</span>
                             </button>
                             <button mat-button color="accent" fxLayout="row" fxLayoutAlign="start center" (click)="logout()">
                                 <mat-icon fxFlex="35">logout</mat-icon>

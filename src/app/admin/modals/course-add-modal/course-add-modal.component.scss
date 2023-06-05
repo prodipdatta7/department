@@ -1,0 +1,18 @@
+.dialog {
+    min-height: 300px;
+    width: 500px;
+    padding: 20px 28px;
+}
+
+.title {
+    font-size: 18px;
+    font-family: 'roboto-bold', sans-serif;
+    letter-spacing: 0.8px;
+    line-height: 20px;
+}
+.warning {
+    padding: 8px;
+    background-color: rgba(255, 0, 0, 0.4);
+    color: #fff;
+    font-weight: bold;
+}

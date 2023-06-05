@@ -40,7 +40,7 @@
         "typescript": "~4.9.4"
     },
     "prettier": {
-        "printWidth": 150,
+        "printWidth": 132,
         "tabWidth": 4,
         "singleQuote": true,
         "semi": true,

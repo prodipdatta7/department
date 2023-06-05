@@ -22,9 +22,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexModule } from '@angular/flex-layout';
 import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AdminRootComponent } from './components/admin-root/admin-root.component';
+import { CoursesComponent } from './components/courses/courses.component';
+import { CourseDetailsComponent } from './components/course-details/course-details.component';
+import { ExamComponent } from './components/exam/exam.component';
+import { ExamDetailsComponent } from './components/exam-details/exam-details.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CourseAddModalComponent } from './modals/course-add-modal/course-add-modal.component';
 
 const materials = [
     MatAutocompleteModule,
@@ -48,10 +55,20 @@ const materials = [
     MatTabsModule,
     MatToolbarModule,
     MatSortModule,
+    MatPaginatorModule,
 ];
 
 @NgModule({
-    declarations: [UsersComponent, AdminRootComponent],
-    imports: [CommonModule, AdminRoutingModule, FlexLayoutModule, ...materials],
+    declarations: [
+        UsersComponent,
+        AdminRootComponent,
+        CoursesComponent,
+        CourseDetailsComponent,
+        ExamComponent,
+        ExamDetailsComponent,
+        CourseAddModalComponent,
+    ],
+    imports: [CommonModule, AdminRoutingModule, FlexModule, ...materials, HttpClientModule],
+    entryComponents: [CourseAddModalComponent],
 })
 export class AdminModule {}

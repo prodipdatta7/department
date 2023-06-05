@@ -1,10 +1,13 @@
-table {
-    width: 100%;
+.topper {
+    margin: 12px 0px;
 }
 
-:host ::ng-deep .mat-mdc-form-field-infix {
-    min-width: 80px !important;
-    max-width: 100px !important;
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'robot bold' sans-serif;
+    letter-spacing: 0.8px;
+    line-height: 20px;
 }
 
 .mat-mdc-row .mat-mdc-cell {

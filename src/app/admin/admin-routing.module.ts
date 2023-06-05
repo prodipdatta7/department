@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UsersComponent } from './components/users/users.component';
 import { AdminRootComponent } from './components/admin-root/admin-root.component';
+import { ProfileComponent } from '../components/profile/profile.component';
+import { CoursesComponent } from './components/courses/courses.component';
 
 const routes: Routes = [
     {
@@ -16,6 +18,14 @@ const routes: Routes = [
                 path: '',
                 pathMatch: 'full',
                 redirectTo: 'user',
+            },
+            {
+                path: 'user/:id',
+                component: ProfileComponent,
+            },
+            {
+                path: 'courses',
+                component: CoursesComponent,
             },
         ],
     },

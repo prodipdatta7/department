@@ -1,3 +1,9 @@
 a {
-  text-decoration: none;
+    text-decoration: none;
+}
+.text-truncation {
+    max-width: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
