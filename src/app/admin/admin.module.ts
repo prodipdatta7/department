@@ -25,6 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexModule } from '@angular/flex-layout';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDividerModule } from '@angular/material/divider';
 import { AdminRootComponent } from './components/admin-root/admin-root.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { CourseDetailsComponent } from './components/course-details/course-details.component';
@@ -56,6 +57,7 @@ const materials = [
     MatToolbarModule,
     MatSortModule,
     MatPaginatorModule,
+    MatDividerModule,
 ];
 
 @NgModule({

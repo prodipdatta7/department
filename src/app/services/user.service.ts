@@ -17,9 +17,9 @@ export class UserService {
     };
     constructor(private http: HttpClient, private localStorage: LocalStorageService, private commonService: CommonService) {}
 
-    isStillAuthentic(): Boolean {
+    isStillAuthentic(): boolean {
         const token = this.localStorage.getToken();
-        if (Boolean(token)) {
+        if (token) {
             const parsedToken = this.parseJwt(token);
             if (!this._tokenExpired(parsedToken.exp)) {
                 return true;
@@ -36,17 +36,29 @@ export class UserService {
         return this.http.post<any>(`${this.apiUrl}/login`, payload, this.httpOptions);
     }
 
+    updateUser(payload: any, id: string, imageFile?: any): Observable<any> {
+        if (imageFile) {
+            const form = new FormData();
+            form.append('image', imageFile);
+            return this.http.put<any>(`${this.apiUrl}/update/${id}`, form);
+        }
+        return this.http.put<any>(`${this.apiUrl}/update/${id}`, payload);
+    }
+
     Logout() {
         this.localStorage.setToken(null);
         this.localStorage.setLoggedInUserData(null);
         this.commonService.userLoggedout.next(true);
+    }
+    getUserById(id: string | null): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/get-user/${id}`);
     }
     getUserList(): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/get-users`);
     }
     getUserData() {
         const token = localStorage.getItem('token');
-        if (Boolean(token)) {
+        if (token) {
             const parsedToken = this.parseJwt(token);
             if (!this._tokenExpired(parsedToken.exp)) {
                 const rawData = localStorage.getItem('user');

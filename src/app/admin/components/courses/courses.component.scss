@@ -5,9 +5,9 @@
 .title {
     font-size: 18px;
     font-weight: 600;
-    font-family: 'robot bold' sans-serif;
+    font-family: "Poppins" sans-serif;
     letter-spacing: 0.8px;
-    line-height: 20px;
+    line-height: 24px;
 }
 
 .mat-mdc-row .mat-mdc-cell {
@@ -18,4 +18,12 @@
 
 .mat-mdc-row:hover .mat-mdc-cell {
     background-color: rgba(52, 116, 235, 0.2);
+}
+.table {
+    max-height: 452px !important;
+    overflow-y: auto;
+    border-radius: 8px;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }

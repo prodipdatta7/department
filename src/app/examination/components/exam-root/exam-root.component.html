@@ -1,0 +1,110 @@
+<div class="bg-main-color p-20">
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="exam-root">
+        <div fxFlex="100" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" class="bg-color-white p-20">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <mat-icon color="primary">rate_review</mat-icon>
+                <span class="headline-5">Upcomming Examinations</span>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+                <div fxFlex="100%" fxLayout="row wrap">
+                    <ng-container *ngFor="let exam of upcommingExams">
+                        <div fxFlex="50%" class="p-12">
+                            <mat-card class="card">
+                                <mat-card-header fxLayoutAlign="center center">
+                                    <mat-card-title> {{ exam.examName }} </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content class="mt-20">
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="mt-8">
+                                        <div fxFlex="50%" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+                                            <span class="subtitle-2 w-180">Registration Open Date: </span>
+                                            <span class="subtitle-1"> {{ exam.registrationOpenDate | date : "longDate" }} </span>
+                                        </div>
+                                        <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+                                            <span class="subtitle-2 w-180">Registration Close Date: </span>
+                                            <span class="subtitle-1"> {{ exam.registrationCloseDate | date : "longDate" }} </span>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="8px" class="mt-8">
+                                        <span class="subtitle-2 w-180">Exam date: </span>
+                                        <span class="subtitle-1"> {{ exam.examDate | date : "longDate" }} </span>
+                                    </div>
+                                </mat-card-content>
+                                <mat-divider class="mt-12"></mat-divider>
+                                <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px">
+                                    <div fxFlex="70%">
+                                        <marquee
+                                            *ngIf="exam.isRegistrationOpened"
+                                            behavior="scroll"
+                                            direction="left"
+                                            class="subtitle-1 text-color"
+                                        >
+                                            Registration is open now!!
+                                        </marquee>
+                                    </div>
+                                    <button
+                                        mat-raised-button
+                                        color="primary"
+                                        class="button-text cursor-pointer"
+                                        (click)="seeDetails(exam)"
+                                    >
+                                        See Details
+                                    </button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div fxFlex="100" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" class="bg-color-white p-20">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <mat-icon color="primary">rate_review</mat-icon>
+                <span class="headline-5">Past Examinations</span>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+                <div fxFlex="100%" fxLayout="row wrap">
+                    <ng-container *ngFor="let exam of pastExams">
+                        <div fxFlex="50%" class="p-12">
+                            <mat-card class="card">
+                                <mat-card-header fxLayoutAlign="center center">
+                                    <mat-card-title> {{ exam.examName }} </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content class="mt-20">
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="mt-8">
+                                        <div fxFlex="50%" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+                                            <span class="subtitle-2 w-180">Registration Open Date: </span>
+                                            <span class="subtitle-1">
+                                                {{ exam.registrationOpenDate || "TBD" | date : "longDate" }}
+                                            </span>
+                                        </div>
+                                        <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+                                            <span class="subtitle-2 w-180">Registration Close Date: </span>
+                                            <span class="subtitle-1">
+                                                {{ exam.registrationCloseDate || "TBD" | date : "longDate" }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="8px" class="mt-8">
+                                        <span class="subtitle-2 w-180">Exam date: </span>
+                                        <span class="subtitle-1"> {{ exam.examDate || "TBD" | date : "longDate" }} </span>
+                                    </div>
+                                </mat-card-content>
+                                <mat-divider class="mt-12"></mat-divider>
+                                <mat-card-actions fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+                                    <button
+                                        mat-raised-button
+                                        color="primary"
+                                        class="button-text cursor-pointer"
+                                        (click)="seeDetails(exam)"
+                                    >
+                                        See Details
+                                    </button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

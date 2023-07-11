@@ -22,16 +22,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexModule } from '@angular/flex-layout';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { ExaminationsComponent } from './components/examinations/examinations.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SharedModule } from './shared/shared.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { SettingsComponent } from './components/settings/settings.component';
+import { MatNativeDateModule } from '@angular/material/core';
 const materials = [
     MatAutocompleteModule,
     MatButtonModule,
@@ -53,20 +58,33 @@ const materials = [
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatSortModule,
+    MatDividerModule,
+    MatDatepickerModule,
 ];
 
 @NgModule({
     declarations: [
         AppComponent,
-        DashboardComponent,
+        HomeComponent,
         ProfileComponent,
         LoginComponent,
         RegisterComponent,
         LogoutComponent,
-        ExaminationsComponent,
+        SettingsComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ...materials, FlexModule, HttpClientModule],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        ...materials,
+        FlexModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        SharedModule,
+        MatNativeDateModule,
+    ],
     exports: [ProfileComponent],
     providers: [],
     bootstrap: [AppComponent],

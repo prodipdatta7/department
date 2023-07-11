@@ -23,12 +23,13 @@ export interface ICourseModel {
 export class CoursesComponent implements OnInit, OnDestroy {
     courses = [];
     dataSource!: MatTableDataSource<any>;
-    displayedColumns = ['courseCode', 'courseName', 'courseCredits'];
     columnDefs = [
         { field: 'courseCode', label: 'Course Code', show: true },
         { field: 'courseName', label: 'Course Name', show: true },
         { field: 'courseCredits', label: 'Course Credits', show: true },
+        { field: 'courseCoverageSemester', label: 'Semester', show: true },
     ];
+    displayedColumns = this.columnDefs.map((column) => column.field);
     dataLoaded = false;
     constructor(private adminService: AdminSpecificService, private dialog: MatDialog) {}
     @ViewChild('paginator') paginator!: MatPaginator;

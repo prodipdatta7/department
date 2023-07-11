@@ -1,32 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { ExaminationsComponent } from './components/examinations/examinations.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 const routes: Routes = [
     {
-        path: 'dashboard',
-        component: DashboardComponent,
+        path: 'home',
+        component: HomeComponent,
     },
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard',
+        redirectTo: 'home',
     },
     {
         path: 'examination',
-        component: ExaminationsComponent,
-    },
-    {
-        path: 'profile',
-        component: ProfileComponent,
+        loadChildren: () => import('./examination/examination.module').then((m) => m.ExaminationModule),
     },
     {
         path: 'profile/:id',
         component: ProfileComponent,
+    },
+    {
+        path: 'profile/:id/update',
+        component: SettingsComponent,
     },
     {
         path: 'register',

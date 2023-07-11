@@ -1,0 +1,113 @@
+.profile_photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.sidenav {
+    background-color: #40156b;
+    color: #fff;
+    width: 260px;
+    min-width: 260px;
+    height: calc(100vh - 64px);
+}
+
+.main-profile {
+    width: calc(100vw - 248px);
+    max-height: calc(100vh - 64px);
+    overflow: hidden auto;
+    background-color: #dbdfea;
+}
+
+.title {
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 20px 0px;
+}
+
+.basic_info {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    height: auto;
+}
+
+.border-radius-8 {
+    border-radius: 8px;
+}
+
+.profile-content {
+    font-weight: 600;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    font-size: 18px;
+    padding: 8px 12px;
+    &:hover {
+        background-color: #fff;
+        color: #40156b;
+    }
+}
+
+.edit-button {
+    margin-left: auto;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+input[type="file"] {
+    display: none;
+}
+.profile_img {
+    border-radius: 50%;
+}
+
+.profile_img:hover {
+    .buton-control {
+        visibility: visible;
+    }
+    .profile_photo {
+        opacity: 0.4;
+    }
+}
+
+.buton-control {
+    visibility: hidden;
+    width: 200px !important;
+}
+
+.zoom {
+    position: absolute;
+    margin-bottom: 208px !important;
+    background: transparent;
+    width: 200px;
+    height: 200px;
+}
+
+.change {
+    position: absolute;
+    margin-bottom: 36px !important;
+    background-color: #9ac5f4;
+    width: 200px !important;
+}
+.content {
+    border-bottom: 0.2px solid #7e8084;
+}
+
+fieldset {
+    border-radius: 8px !important;
+    padding: 20px !important;
+}
+
+.subtitle-2 {
+    font-weight: 300 !important;
+}
+
+.bg-color {
+    background-color: #fff;
+}

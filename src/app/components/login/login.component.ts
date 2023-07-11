@@ -37,13 +37,12 @@ export class LoginComponent implements OnInit {
             password: this.loginForm.get('password')?.value,
         };
         this.userService.Login(payload).subscribe((response) => {
-            if (response && response.success) {
-                debugger;
+            if (response?.success) {
                 const token = response.token;
                 this.localStorage.setToken(token);
                 this.localStorage.setLoggedInUserData(response.data);
                 this.commonService.checkUserLoginStatus.next(true);
-                this.router.navigate(['dashboard']);
+                this.router.navigate([`profile/${response.data._id}`]);
             }
         });
     }

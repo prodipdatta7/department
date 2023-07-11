@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 import { Subscription, filter } from 'rxjs';
 import { CommonService } from './services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -13,15 +14,23 @@ export class AppComponent implements OnInit, OnDestroy {
     isAuthenticated = false;
     profileData: any;
     subscriptions: Subscription[] = [];
-    constructor(private userService: UserService, private commonService: CommonService) {}
+    navigations = CommonService.navigations;
+    constructor(private userService: UserService, private commonService: CommonService, private router: Router) {}
     ngOnInit(): void {
         if (this.userService.isStillAuthentic()) {
-            this.profileData = this.userService.getUserData() || {};
+            const data = this.userService.getUserData() || {};
             this.isAuthenticated = true;
+            const id = data._id;
+            this.userService.getUserById(id).subscribe((res: any) => {
+                if (res?.data) {
+                    this.profileData = res.data;
+                }
+            });
+        } else {
+            this.router.navigateByUrl('login').then();
         }
         this.subscriptions.push(
             this.commonService.checkUserLoginStatus.pipe(filter((t) => t !== null)).subscribe((flag) => {
-                debugger;
                 if (flag) {
                     this.profileData = this.userService.getUserData() || {};
                     this.isAuthenticated = true;
@@ -42,5 +51,11 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     logout() {
         this.userService.Logout();
+    }
+    settings() {
+        this.router.navigate([`profile/${this.profileData._id}/update`]);
+    }
+    visitProfile() {
+        this.router.navigate([`profile/${this.profileData._id}`]);
     }
 }

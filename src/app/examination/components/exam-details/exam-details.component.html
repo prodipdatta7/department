@@ -1,0 +1,87 @@
+<div class="bg-main-color p-20">
+    <mat-progress-bar *ngIf="!dataLoaded" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="dataLoaded" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="40px" class="content-page">
+        <div fxLayoutAlign="center center" class="bg-color-white p-12 border-radius-8">
+            <span class="headline-5"> {{ examData?.examName }} </span>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="24px" class="p-20 bg-color-white border-radius-8">
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                <span class="headline-6">Examination Information</span>
+                <div fxLayout="row wrap" fxLayoutAlign="start center">
+                    <div fxLayout="row" fxLayoutGap="8px" fxFlex="33" class="py-12">
+                        <span class="subtitle-2">Year: </span>
+                        <span class="subtitle-1"> {{ examData?.year }} year </span>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="8px" fxFlex="33" class="py-12">
+                        <span class="subtitle-2">Semester: </span>
+                        <span class="subtitle-1"> {{ examData?.semester }} semester </span>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="8px" fxFlex="33" class="py-12">
+                        <span class="subtitle-2">Examination Centre: </span>
+                        <span class="subtitle-1"> {{ examData?.examCentre }} </span>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="8px" fxFlex="33" class="py-12">
+                        <span class="subtitle-2">Examination Start Date: </span>
+                        <span class="subtitle-1"> {{ examData?.examDate | date : "longDate" }} </span>
+                    </div>
+                    <div fxFlex="33" class="py-12" *ngIf="examData?.status === 'upcomming'">
+                        <app-count-down-timer [closeDate]="examData?.examDate">Examination Starts in</app-count-down-timer>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="24px" class="p-20 bg-color-white border-radius-8">
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                <span class="headline-6">Registration Information</span>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div fxLayout="row" fxLayoutGap="8px" fxFlex="33" class="py-12">
+                        <span class="subtitle-2">Registration Open Date: </span>
+                        <span class="subtitle-1"> {{ examData?.registrationOpenDate | date : "longDate" }} </span>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="8px" fxFlex="33" class="py-12">
+                        <span class="subtitle-2">Registration Close Date: </span>
+                        <span class="subtitle-1"> {{ examData?.registrationCloseDate | date : "longDate" }} </span>
+                    </div>
+                    <div fxFlex="33" class="py-12" *ngIf="examData?.status === 'upcomming'">
+                        <app-count-down-timer [closeDate]="examData?.registrationCloseDate"
+                            >Registration Ends in</app-count-down-timer
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" class="bg-color-white p-20 border-radius-8">
+            <div>
+                <span class="headline-6">Selected Courses</span>
+            </div>
+            <div fxFlex="100">
+                <div fxLayout="row" fxLayoutAlign="start center" class="p-8">
+                    <span fxFlex="20" class="subtitle-2">Code</span>
+                    <span fxFlex="60" class="subtitle-2">Name</span>
+                    <span fxFlex="20" class="subtitle-2">Credit(s)</span>
+                </div>
+                <mat-divider></mat-divider>
+                <ng-container *ngFor="let course of examData?.courses">
+                    <div fxLayout="row" class="p-8">
+                        <span fxFlex="20" class="subtitle-1"> {{ course?.courseCode }} </span>
+                        <span fxFlex="60" class="subtitle-1"> {{ course?.courseName }} </span>
+                        <span fxFlex="20" class="subtitle-1"> {{ course?.courseCredits }} </span>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" class="p-20 bg-color-white border-radius-8">
+            <button mat-stroked-button color="primary" class="button-text" (click)="backToExamTab()">Back</button>
+            <button
+                *ngIf="examData?.status === 'upcomming'"
+                [disabled]="!isRegistrationOpened(examData?.registrationOpenDate, examData?.registrationCloseDate)"
+                mat-raised-button
+                color="primary"
+                class="button-text"
+                (click)="register()"
+            >
+                Register
+            </button>
+        </div>
+    </div>
+</div>

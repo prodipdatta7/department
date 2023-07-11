@@ -7,3 +7,33 @@ a {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+img {
+    border-radius: 50%;
+    width: 40px !important;
+    height: 40px !important;
+    padding-top: 4px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.highlight {
+    background-color: #f6f1e9;
+    color: #4c4c6d;
+}
+
+.login {
+    background-color: #f7f7ee;
+    min-width: 88px !important;
+}
+.signup {
+    background-color: #f7f7ee;
+    min-width: 88px !important;
+}
+
+.menu-profile-image {
+    width: 80px !important;
+    height: 80px !important;
+}

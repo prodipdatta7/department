@@ -1,0 +1,292 @@
+<div fxLayout="row" fxFlex="100" class="p-20 w-100-p background">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="!loading" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="w-100-p mat-elevation-z2 p-20">
+        <div class="bg-color p-20">
+            <div fxLayout="column">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                    <mat-icon color="primary">photo_camera</mat-icon>
+                    <span class="headline-5">Profile Image</span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center">
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <img
+                            class="w-400 h-400 p-12"
+                            src="{{ this.imagePreview }}"
+                            onerror="this.src='assets/images/profile_avatar.jpg'"
+                            alt="{{ this.profileData?.name }}"
+                        />
+                    </div>
+                    <div fxLayoutGap="8px">
+                        <button mat-raised-button color="primary" (click)="filePicker.click()">Change Image</button>
+                        <button mat-stroked-button color="primary" (click)="viewImage($event)">View Image</button>
+                    </div>
+                    <input type="file" class="hidden" #filePicker (change)="changeImage($event)" />
+                </div>
+            </div>
+        </div>
+        <div class="bg-color p-20">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="mb-20">
+                <mat-icon color="primary">description</mat-icon>
+                <span class="headline-5">Student Information</span>
+            </div>
+            <form
+                [formGroup]="basicInfo"
+                fxLayout="column"
+                fxLayoutAlign="start stretch"
+                fxLayoutGap="12px"
+                class="w-100-p p-20 mat-elevation-z2"
+            >
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px" class="w-100-p">
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Name</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Name" type="text" matInput formControlName="Name" />
+                            <mat-error *ngIf="Name.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Father's Name</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Father's Name" type="text" matInput formControlName="FatherName" />
+                            <mat-error *ngIf="FatherName.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Mother's Name</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Mother's Name" type="text" matInput formControlName="MotherName" />
+                            <mat-error *ngIf="MotherName.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Husband/Guardian's Name</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Husband/Guardian's Name" type="text" matInput formControlName="GuardianName" />
+                            <mat-error *ngIf="GuardianName.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px" class="w-100-p">
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Phone</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Phone Number" type="text" matInput formControlName="Phone" />
+                            <mat-error *ngIf="Phone.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="46.5">
+                        <span class="subtitle-2 mb-8">Present Address</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Present Address" type="text" matInput formControlName="PresentAddress" />
+                            <mat-error *ngIf="PresentAddress.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Village</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Village" type="text" matInput formControlName="Village" />
+                            <mat-error *ngIf="Village.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px" class="w-100-p">
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Post Office</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Post Office" type="text" matInput formControlName="PostOffice" />
+                            <mat-error *ngIf="PostOffice.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Sub-District</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Sub-District" type="text" matInput formControlName="SubDistrict" />
+                            <mat-error *ngIf="SubDistrict.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">District</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type District" type="text" matInput formControlName="District" />
+                            <mat-error *ngIf="District.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Nationality</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Nationality" type="text" matInput formControlName="Nationality" />
+                            <mat-error *ngIf="Nationality.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px" class="w-100-p">
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Religion</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Religion" type="text" matInput formControlName="Religion" />
+                            <mat-error *ngIf="Religion.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Birth date</span>
+                        <mat-form-field appearance="outline" fxFlex="20" (click)="picker.open()">
+                            <input
+                                matInput
+                                placeholder="Pick Birth date"
+                                [matDatepicker]="picker"
+                                (click)="picker.open()"
+                                formControlName="BirthDate"
+                            />
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="BirthDate.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Hall Name</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input placeholder="Type Hall Name" type="text" matInput formControlName="hallName" />
+                            <mat-error *ngIf="HallName.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="column" fxFlex="20"></div>
+                </div>
+            </form>
+        </div>
+        <div fxLayout="column" fxLayoutALign="start stretch" class="bg-color p-20">
+            <div class="mb-20" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                <mat-icon color="primary">school</mat-icon>
+                <span class="headline-5">Academic Information</span>
+            </div>
+            <div class="p-20 w-100-p mat-elevation-z2" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="headers subtitle-2">
+                    <span fxFlex="20">Exam Name</span>
+                    <span fxFlex="10">Pasisng Year</span>
+                    <span fxFlex="30">Institute</span>
+                    <span fxFlex="18">Board/University</span>
+                    <span fxFlex="10">Exam Roll</span>
+                    <span fxFlex="10">Division/GPA</span>
+                    <span fxFlex="2"></span>
+                </div>
+                <form [formGroup]="academicInfo">
+                    <div formArrayName="infos">
+                        <div *ngFor="let info of AcademicInfo?.controls; let i = index" [formGroupName]="i">
+                            <div class="subtitle-2" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="100">
+                                <mat-form-field appearance="outline" fxFlex="20">
+                                    <input type="text" matInput placeholder="Type Exam Name" formControlName="examName" />
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="10">
+                                    <input type="number" matInput placeholder="Type Passing Year" formControlName="passingYear" />
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="30">
+                                    <input type="text" matInput placeholder="Type Institute Name" formControlName="institute" />
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="18">
+                                    <input type="text" matInput placeholder="Type Board/University" formControlName="board" />
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="10">
+                                    <input type="text" matInput placeholder="Type Roll" formControlName="examRoll" />
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="10">
+                                    <input type="text" matInput placeholder="Type Division/GPA" formControlName="GPA" />
+                                </mat-form-field>
+                                <div fxFlex="2" fxLayout="row" fxLayoutAlign="start start">
+                                    <mat-icon *ngIf="i" class="cursor-pointer" color="warn" (click)="removeRow(i)">delete</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button [disabled]="academicInfo.invalid" mat-raised-button color="primary" (click)="addAnotherRow()">
+                                Add more
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div fxLayout="column" fxLayoutALign="start stretch" class="bg-color p-20">
+            <div class="mb-20" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                <mat-icon color="primary">menu_book</mat-icon>
+                <span class="headline-5">Course Information</span>
+            </div>
+            <div class="p-20 w-100-p mat-elevation-z2" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="headers subtitle-2">
+                    <span fxFlex="20">Course Code</span>
+                    <span fxFlex="60">Course Name</span>
+                    <span fxFlex="20">Course Credits</span>
+                    <span fxFlex="2"></span>
+                </div>
+                <form [formGroup]="courseInfo">
+                    <div formArrayName="infos">
+                        <div *ngFor="let info of CourseInfo?.controls; let i = index" [formGroupName]="i">
+                            <div class="subtitle-2" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="100">
+                                <mat-form-field appearance="outline" fxFlex="20">
+                                    <input
+                                        [matAutocomplete]="auto"
+                                        type="text"
+                                        matInput
+                                        placeholder="Type Course Code"
+                                        formControlName="courseCode"
+                                        (click)="openInputBoxForCode(i)"
+                                    />
+                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event, i)">
+                                        <mat-option *ngFor="let course of filteredCourses | async" [value]="course">
+                                            {{ course.courseCode }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="60">
+                                    <input
+                                        type="text"
+                                        matInput
+                                        placeholder="Type Course Name"
+                                        formControlName="courseName"
+                                        (click)="openInputBoxForName(i)"
+                                        [matAutocomplete]="autoName"
+                                    />
+                                    <mat-autocomplete #autoName="matAutocomplete" (optionSelected)="optionSelected($event, i)">
+                                        <mat-option *ngFor="let course of filteredCourses | async" [value]="course">
+                                            {{ course.courseName }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="20">
+                                    <input
+                                        type="number"
+                                        matInput
+                                        placeholder="Type Course Credits"
+                                        formControlName="courseCredits"
+                                        readonly
+                                    />
+                                </mat-form-field>
+                                <div fxFlex="2" fxLayout="row" fxLayoutAlign="start start">
+                                    <mat-icon *ngIf="i" class="cursor-pointer" color="warn" (click)="removeCourse(i)"
+                                        >delete</mat-icon
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button [disabled]="courseInfo.invalid" mat-raised-button color="primary" (click)="addCourse()">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" class="bg-color p-20">
+            <button class="w-100 button-text" mat-stroked-button color="primary" (click)="backToProfile()">BACK</button>
+            <button
+                [disabled]="basicInfo.invalid || AcademicInfo.invalid || CourseInfo.invalid"
+                class="w-100 button-text"
+                mat-raised-button
+                color="primary"
+                (click)="onSave()"
+            >
+                UPDATE
+            </button>
+            <mat-spinner diameter="25" *ngIf="updating"></mat-spinner>
+        </div>
+    </div>
+</div>

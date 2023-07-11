@@ -70,6 +70,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
     getRowData(user: any) {
         console.log(user);
-        this.router.navigate(['admin' + `/user/${user._id}`]);
+        this.router.navigate(['profile' + `/${user._id}`]);
     }
 }

@@ -1,14 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap");
+@import "./styles/spacing.scss";
+@import "./styles/typography";
 html,
 body {
     height: 100%;
+    font-family: "Poppins", sans-serif;
 }
 body {
     margin: 0;
-    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .mt-16 {
     margin-top: 16px;
+}
+div.title {
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+}
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.hidden {
+    display: none;
+}
+
+.bg-main-color {
+    background-color: #dbdfea !important;
+}
+
+.bg-color-white {
+    background-color: #fff;
 }

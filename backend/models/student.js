@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const { Double } = require("mongodb");
+const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
     {
@@ -30,20 +31,51 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        imagePath: {
+            type: String,
+            default: null,
+        },
         address: {
             type: String,
-            default: '-',
+            default: null,
         },
         isAdmin: {
             type: Boolean,
             default: false,
         },
+        fatherName: String,
+        motherName: String,
+        guardianName: String,
+        village: String,
+        postOffice: String,
+        subDistrict: String,
+        district: String,
+        nationality: String,
+        religion: String,
+        hallName: String,
+        birthDate: Date,
+        academicInfo: [
+            {
+                examName: String,
+                passingYear: Number,
+                institute: String,
+                board: String,
+                examRoll: String,
+                GPA: String,
+            },
+        ],
+        courses: [
+            {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: "Course",
+            },
+        ],
     },
     {
         timestamps: true,
     }
 );
 
-const Student = mongoose.model('Student', userSchema);
+const Student = mongoose.model("Student", userSchema);
 
 module.exports = Student;

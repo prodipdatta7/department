@@ -1,10 +1,41 @@
-const Student = require('../models/student');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const Student = require("../models/student");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+
+const config = {
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: "author.service2023@gmail.com",
+        pass: process.env.APP_PASSWORD_WINDOWS,
+    },
+};
+
+const data = {
+    from: "author.service2023@gmail.com",
+    to: "",
+    subject: "",
+    text: "",
+};
+
+const send = (data) => {
+    const transporter = nodemailer.createTransport(config);
+    transporter.sendMail(data, (err, info) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return info.response;
+        }
+    });
+};
 
 async function getUsers(req, res) {
     try {
         const users = await Student.find();
+        console.log(users);
         res.status(200).json({
             success: true,
             count: users.length,
@@ -20,7 +51,8 @@ async function getUsers(req, res) {
 
 async function getUserById(req, res) {
     try {
-        const user = await Student.findById(req.params.id).select('-password');
+        const user = await Student.findById(req.params.id).select("-password").populate("courses");
+        console.log(user);
         if (user) {
             res.status(200).json({
                 success: true,
@@ -29,7 +61,7 @@ async function getUserById(req, res) {
         } else {
             res.status(404).json({
                 success: false,
-                message: 'User not found',
+                message: "User not found",
             });
         }
     } catch (error) {
@@ -41,21 +73,25 @@ async function getUserById(req, res) {
 }
 
 async function createUser(req, res) {
-    // console.log(req);
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         console.log(hashedPassword);
         const payload = req.payload;
         payload.password = hashedPassword;
         const student = new Student(payload);
-        console.log('student', student);
+        console.log("student", student);
         const response = await student.save();
         if (!response) {
             res.status(500).json({
                 success: false,
-                message: 'Error creating student account',
+                message: "Error creating student account",
             });
         } else {
+            data.to = payload.email;
+            data.subject = `Thank you ${payload.name} for registering`;
+            data.text = `Dear ${payload.name}, Thank you for registering to our portal.
+Sincerly Admin`;
+            const response = send(data);
             res.status(200).json({
                 success: true,
                 data: response,
@@ -64,7 +100,7 @@ async function createUser(req, res) {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error creating student account',
+            message: "Error creating student account",
             error: error,
         });
     }
@@ -86,7 +122,7 @@ async function updateUser(req, res) {
         if (!updatedData) {
             res.status(404).json({
                 success: false,
-                message: 'Update failed. ID might be incorrect',
+                message: "Update failed. ID might be incorrect",
             });
         } else {
             res.status(200).json({ success: true, data: updatedData });
@@ -104,9 +140,12 @@ async function login(req, res) {
         });
         const secretKey = process.env.SECRET_KEY;
         if (!user) {
-            return res.status(404).json({ success: false, error: 'User Not Found!' });
+            return res.status(404).json({ success: false, error: "User Not Found!" });
         }
-        if (bcrypt.compareSync(req.body.password, user.password) === true) {
+        console.log(user, secretKey, req.body.password);
+        const isEqual = bcrypt.compareSync(req.body.password, user.password);
+        console.log(isEqual);
+        if (isEqual === true) {
             const token = jwt.sign(
                 {
                     id: user._id,
@@ -114,13 +153,15 @@ async function login(req, res) {
                     isAdmin: user.isAdmin,
                 },
                 secretKey,
-                { expiresIn: '6h' }
+                { expiresIn: "6h" }
             );
             res.status(200).json({
                 success: true,
                 data: user,
                 token: token,
             });
+        } else {
+            res.status(404).json({ success: false, error: "Authorization failed" });
         }
     } catch (error) {
         res.status(500).json({ success: false, error: error });

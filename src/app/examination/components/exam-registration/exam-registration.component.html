@@ -1,0 +1,93 @@
+<div class="p-20 bg-main-color">
+    <mat-progress-bar *ngIf="!dataLoaded" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="dataLoaded" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+        <div fxLayout="column" fxLayoutAlign="center center" class="bg-color-white p-12 border-radius-8">
+            <p class="headline-5">Registration Form</p>
+            <p class="headline-6">{{ examData?.examName }}</p>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+            <div class="bg-color-white p-20 border-radius-8">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                    <img src="assets/images/bsmrstu_logo.jpeg" alt="bsmrstu logo" />
+                    <span class="headline-6">Bangabandhu Sheikh Mujibur Rahman Science and Technology University, Gopalganj</span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+                    <div fxLayoutAlign="center center">
+                        <span class="headline-6">Admit Card</span>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="start stretch" class="">
+                        <div fxLayout="row" fxLayoutAlign="start start">
+                            <div fxFlex="75" fxLayout="column" fxLayoutALign="start stretch" fxLayoutGap="16px">
+                                <div>
+                                    <span class="subtitle-1"> {{ examData?.examName }} </span>
+                                </div>
+                                <div fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                    <div fxFlex="33" fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                        <span class="subtitle-2 w-160">Candidate's Name:</span>
+                                        <span class="subtitle-1"> {{ userData?.name }} </span>
+                                    </div>
+                                    <div fxFlex="33" fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                        <span class="subtitle-2 w-160">Department's Name:</span>
+                                        <span class="subtitle-1"> {{ userData?.department }} </span>
+                                    </div>
+                                    <div fxFlex="33" fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                        <span class="subtitle-2 w-160">Student ID Number:</span>
+                                        <span class="subtitle-1"> {{ userData?.studentId }} </span>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                    <div fxFlex="33" fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                        <span class="subtitle-2 w-160">Session:</span>
+                                        <span class="subtitle-1"> {{ userData?.session }} </span>
+                                    </div>
+                                    <div fxFlex="33" fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                        <span class="subtitle-2 w-160">Hall Name:</span>
+                                        <span class="subtitle-1"> {{ userData?.hallName }} </span>
+                                    </div>
+                                    <div fxFlex="33" fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                        <span class="subtitle-2 w-160">Exam Centre: </span>
+                                        <span class="subtitle-1"> {{ examData?.examCentre }} </span>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                    <div fxFlex="33" fxLayout="row" fxLayoutALign="start center" fxLayoutGap="12px">
+                                        <span class="subtitle-2 w-160">Exam Start Date: </span>
+                                        <span class="subtitle-1"> {{ examData?.examDate | date : "longDate" }} </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div fxFlex="25" fxLayout="row" fxLayoutAlign="center center">
+                                <img class="admit-img" src="{{ userData?.imagePath }}" alt="{{ userData?.name }}" />
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px" class="mt-32">
+                            <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="12px">
+                                <div fxLayout="column" fxLayoutALign="start center">
+                                    <hr class="w-200 border" />
+                                    <div class="m-0 text-align-center">
+                                        <span>examinee's signature</span>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayoutALign="start end">
+                                    <span>Date:</span>
+                                    <hr class="w-160 border h-0 mt-16 ml-4" />
+                                </div>
+                            </div>
+                            <div fxFlex="100" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="12px">
+                                <div fxLayout="column" fxLayoutALign="start center">
+                                    <hr class="w-200 border" />
+                                    <div class="m-0 text-align-center">
+                                        <span>exam controller</span>
+                                    </div>
+                                    <span class="subtitle-2"
+                                        >Bangabandhu Sheikh Mujibur Rahman Science and Technology University, Gopalganj</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

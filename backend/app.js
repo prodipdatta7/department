@@ -1,40 +1,46 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
-const router = express.Router();
 dotenv.config();
+app.use(morgan("tiny"));
 
 // database connection
 mongoose
     .connect(process.env.CONNECTION_STRING)
     .then(() => {
-        console.log('connection established.');
+        console.log("database connection successful.");
     })
     .catch((err) => {
-        console.log('connection error: ', err);
+        console.log("database connection error: ", err);
     });
 
 // Routes
-const userRoutes = require('./routes/users');
-const courseRoutes = require('./routes/courseRoutes');
-
-app.use(express.json());
+const userRoutes = require("./routes/users");
+const courseRoutes = require("./routes/courseRoutes");
+const examRoutes = require("./routes/examRoutes");
+app.use(cors());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: false, limit: "50mb" }));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use((req, res, next) => {
-    console.log('common:', req.body);
+    console.log("common:", req.body);
     console.log(req.url);
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.setHeader('Access-Control-Allow-Headers', 'content-type');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
     next();
 });
-app.use('/users', userRoutes);
-app.use('/courses', courseRoutes);
+app.use("/users", userRoutes);
+app.use("/courses", courseRoutes);
+app.use("/examinations", examRoutes);
 
 const port = process.env.PORT;
 
 app.listen(port, () => {
-    console.log('server is running on port: ', process.env.PORT);
+    console.log("server is running on port: ", process.env.PORT);
 });

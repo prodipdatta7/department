@@ -20,10 +20,6 @@ const routes: Routes = [
                 redirectTo: 'user',
             },
             {
-                path: 'user/:id',
-                component: ProfileComponent,
-            },
-            {
                 path: 'courses',
                 component: CoursesComponent,
             },

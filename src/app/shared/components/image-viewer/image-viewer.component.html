@@ -1,0 +1,9 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px" class="viewer py-12 pl-20 pr-20">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="headline-6">Image Viewer</span>
+        <button mat-icon-button color="warn" (click)="close()"><mat-icon>close</mat-icon></button>
+    </div>
+    <div class="image-container">
+        <img src="{{ imgSrc }}" onerror="this.src='assets/images/profile_avatar.jpg'" alt="profile_photo" />
+    </div>
+</div>

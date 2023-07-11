@@ -16,3 +16,12 @@ table {
 .mat-mdc-row:hover .mat-mdc-cell {
     background-color: rgba(52, 116, 235, 0.2);
 }
+
+.table {
+    max-height: 452px !important;
+    overflow-y: auto;
+    border-radius: 8px;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
