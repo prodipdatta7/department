@@ -1,26 +1,5 @@
-<div fxLayout="row" fxLayoutAlign="start start" fxLayoutgap="20px">
-    <div class="sidenav">
-        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="28px">
-            <div fxLayout="row" fxLayoutAlign="center center">
-                <span class="title">Profile Information</span>
-            </div>
-            <div class="nav-menu" fxLayout="column" fxLayoutAlig="start stretch" fxLayoutAgp="20px">
-                <a href="profile#basicInfo" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                    <mat-icon> width_normal</mat-icon>
-                    <span>Basic Info</span>
-                </a>
-                <a href="profile#academics" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                    <mat-icon> school</mat-icon>
-                    <span>Academics</span>
-                </a>
-                <a href="profile#courses" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-                    <mat-icon>library_books</mat-icon>
-                    <span>Courses</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="p-20 main-profile" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+<div fxLayout="row" fxLayoutAlign="stretch start" fxLayoutgap="20px" class="bg-main-color">
+    <div fxFlex="100" class="p-20" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
         <div fxFlex="100" fxLayout="row" fxLayoutAlign="end start">
             <button mat-raised-button color="primary" (click)="editProfile()">Edit Profile</button>
         </div>
