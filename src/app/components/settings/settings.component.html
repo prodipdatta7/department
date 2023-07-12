@@ -149,7 +149,24 @@
                             <mat-error *ngIf="HallName.errors?.['required']">Field is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <div fxLayout="column" fxFlex="20"></div>
+                    <div fxLayout="column" fxFlex="20">
+                        <span class="subtitle-2 mb-8">Semester</span>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                            <input
+                                placeholder="Choose Semester"
+                                type="text"
+                                matInput
+                                [matAutocomplete]="classComplete"
+                                formControlName="semester"
+                            />
+                            <mat-autocomplete #classComplete="matAutocomplete">
+                                <mat-option *ngFor="let class of CLASSES" [value]="class.value">
+                                    <span class="subtitle-2"> {{ class.title }} </span>
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="Semester.errors?.['required']">Field is required</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </form>
         </div>

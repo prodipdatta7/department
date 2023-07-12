@@ -2,7 +2,7 @@ const Examination = require("../models/examModel");
 
 async function getExams(req, res) {
     try {
-        const exams = await Examination.find(req.params);
+        const exams = await Examination.find(req.query);
         if (exams) {
             res.status(200).json({ success: true, examList: exams });
         } else {

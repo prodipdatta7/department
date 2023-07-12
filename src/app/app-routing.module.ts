@@ -5,6 +5,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 const routes: Routes = [
     {
@@ -39,6 +40,10 @@ const routes: Routes = [
     {
         path: 'admin',
         loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+    },
+    {
+        path: 'contact-us',
+        component: ContactUsComponent,
     },
 ];
 

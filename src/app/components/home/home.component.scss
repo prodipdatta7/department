@@ -1,0 +1,10 @@
+.dimensions {
+    min-height: calc(100vh - 208px) !important;
+    max-height: calc(100vh - 208px) !important;
+    overflow: auto;
+}
+
+.border-left {
+    height: 100vh;
+    border-left: 1px solid #969696;
+}

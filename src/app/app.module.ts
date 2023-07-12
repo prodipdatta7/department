@@ -37,6 +37,7 @@ import { SharedModule } from './shared/shared.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { SettingsComponent } from './components/settings/settings.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 const materials = [
     MatAutocompleteModule,
     MatButtonModule,
@@ -73,6 +74,7 @@ const materials = [
         RegisterComponent,
         LogoutComponent,
         SettingsComponent,
+        ContactUsComponent,
     ],
     imports: [
         BrowserModule,

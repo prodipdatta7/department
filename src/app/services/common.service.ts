@@ -27,6 +27,11 @@ export class CommonService {
             url: 'profile',
             isActive: false,
         },
+        {
+            title: 'Contact-Us',
+            url: 'contact-us',
+            isActive: false,
+        },
     ];
     constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 

@@ -51,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     logout() {
         this.userService.Logout();
+        this.router.navigate(['login']);
     }
     settings() {
         this.router.navigate([`profile/${this.profileData._id}/update`]);

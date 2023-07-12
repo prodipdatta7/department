@@ -1,1 +1,76 @@
-<p>home works!</p>
+<div class="p-20 bg-main-color">
+    <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="75" class="bg-color-white">
+            <div fxLayoutAlign="center center" class="mt-8">
+                <span class="headline-6 p-12 border-radius-4" style="background-color: rgb(183, 153, 255, 40%)"
+                    >Online form fill-up portal for department's Exam registration</span
+                >
+            </div>
+            <div class="dimensions p-20">
+                <p class="subtitle-2">
+                    Welcome to online <strong><i>Examination Registration System</i></strong
+                    >. This is an online form fill-up system to aid the process of exam registration's manual system.
+                </p>
+            </div>
+        </div>
+        <div fxFlex="25" fxLayout="column" fxLayoutAlign="start stretch" class="bg-color-white pb-20">
+            <div fxLayoutAlign="center center" class="p-20">
+                <span class="subtitle-1">Important Updates</span>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+                <div class="pl-20">
+                    <span class="subtitle-2">Upcomming Examinations</span>
+                </div>
+                <div class="p-20">
+                    <ng-container *ngIf="dataLoaded; else loading">
+                        <ng-container *ngIf="upCommingExams.length > 0; else empty">
+                            <div fxLayout="column" fxLayoutGap="8px">
+                                <ng-container *ngFor="let exam of upCommingExams">
+                                    <div
+                                        style="background-color: rgb(174, 226, 255, 40%)"
+                                        class="mat-elevation-z1 p-8 border-radius-4 cursor-pointer"
+                                        (click)="seeDetails(exam._id)"
+                                    >
+                                        <span> {{ exam.examName }} </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <ng-template #empty>
+                            <span class="caption-1 pl-20"> - No Upcomming Exams</span>
+                        </ng-template>
+                    </ng-container>
+                    <ng-template #loading>
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </ng-template>
+                </div>
+
+                <div class="pl-20 pr-20" fxLayout="column" fxLayoutAlign="start stretch">
+                    <mat-divider class="mb-12"></mat-divider>
+                    <span class="subtitle-2">Notices</span>
+                    <ng-container *ngIf="dataLoaded; else loading">
+                        <ng-container *ngIf="notices.length > 0; else empty">
+                            <div fxLayout="column" fxLayoutGap="8px">
+                                <ng-container *ngFor="let notice of notices">
+                                    <div
+                                        style="background-color: rgb(174, 226, 255, 40%)"
+                                        class="mat-elevation-z1 p-8 border-radius-4 cursor-pointer"
+                                        (click)="seeDetails(notice._id)"
+                                    >
+                                        <span> {{ notice.title }} </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <ng-template #empty>
+                            <span class="caption-1 pl-20"> - No notice yet</span>
+                        </ng-template>
+                    </ng-container>
+                    <ng-template #loading>
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

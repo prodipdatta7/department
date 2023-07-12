@@ -7,6 +7,7 @@ import { Observable, Subscription, count, debounceTime, filter, forkJoin, map, s
 import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
 import { ImageViewerComponent } from 'src/app/shared/components/image-viewer/image-viewer.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-settings',
@@ -24,6 +25,7 @@ export class SettingsComponent implements OnInit {
     allCourses: any[] = [];
     filteredCourses!: Observable<any[]> | undefined;
     updating = false;
+    CLASSES = environment.CLASSES;
     constructor(
         private route: ActivatedRoute,
         private userService: UserService,
@@ -87,6 +89,7 @@ export class SettingsComponent implements OnInit {
             Religion: [this.profileData?.religion, [Validators.required]],
             BirthDate: [new Date(this.profileData?.birthDate), [Validators.required]],
             hallName: [this.profileData?.hallName, [Validators.required]],
+            semester: [this.profileData?.semester, [Validators.required]],
         });
         console.log(this.profileData?.birthDate);
         this.academicInfo = this.fb.group({
@@ -188,6 +191,9 @@ export class SettingsComponent implements OnInit {
     get HallName(): FormControl {
         return this.basicInfo.get('hallName') as FormControl;
     }
+    get Semester(): FormControl {
+        return this.basicInfo.get('semester') as FormControl;
+    }
     get AcademicInfo(): FormArray {
         return this.academicInfo.get('infos') as FormArray;
     }
@@ -280,6 +286,7 @@ export class SettingsComponent implements OnInit {
             religion: this.Religion.value,
             birthDate: this.BirthDate.value,
             hallName: this.HallName.value,
+            semester: this.Semester.value,
             academicInfo: this.AcademicInfo.value,
             courses: this.getCourseIds(),
         };
