@@ -13,6 +13,7 @@ function createPayload(req, res, next) {
         studentId: req.body.studentId,
         department: req.body.department,
         address: req.body.address,
+        semester: req.body.semester,
         session: req.body.session,
         isAdmin: req.body.isAdmin,
         imagePath: imagePath,

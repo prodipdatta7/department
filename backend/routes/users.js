@@ -44,6 +44,6 @@ router.get("/get-user/:id", getUserById);
 router.put("/update/:id", multer({ storage: storage }).single("image"), createPayload, updateUser);
 router.post("/login", login);
 router.delete("/remove/:id", deleteUser);
-router.post("/get-by-email", getUserByEmail);
+router.get("/getByEmail", getUserByEmail);
 
 module.exports = router;

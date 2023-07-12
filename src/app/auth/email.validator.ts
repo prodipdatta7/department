@@ -5,10 +5,10 @@ export function EmailValidator(userService: UserService): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         const email = control.value;
         userService.getUserByEmail(email).subscribe((response: any) => {
-            if (response.success) {
+            if (response?.body?.success) {
+                console.log('email error');
                 return { uniqueEmailError: true };
-            }
-            return null;
+            } else return null;
         });
         return null;
     };

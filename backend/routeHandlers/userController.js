@@ -184,7 +184,7 @@ async function deleteUser(req, res) {
 
 async function getUserByEmail(req, res) {
     try {
-        const data = await Student.findOne({ email: req.body.email });
+        const data = await Student.find(req.query);
         console.log(data);
         if (data) {
             res.status(200).json({

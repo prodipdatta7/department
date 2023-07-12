@@ -29,7 +29,8 @@ app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use((req, res, next) => {
     console.log("common:", req.body);
-    console.log(req.url);
+    console.log("url", req.url);
+    console.log("query", req.query);
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");

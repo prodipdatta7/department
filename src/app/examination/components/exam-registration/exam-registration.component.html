@@ -13,7 +13,7 @@
                 </div>
                 <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
                     <div fxLayoutAlign="center center">
-                        <span class="headline-6">Admit Card</span>
+                        <span class="headline-6 table-bg p-12">Admit Card</span>
                     </div>
                     <div fxLayout="column" fxLayoutAlign="start stretch" class="">
                         <div fxLayout="row" fxLayoutAlign="start start">
@@ -84,6 +84,144 @@
                                     >
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-color-white p-20 border-radius-8">
+                <div fxLayoutAlign="center center">
+                    <span class="headline-6 table-bg p-12">Student Information</span>
+                </div>
+                <div fxLayout="row wrap">
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Name:</span>
+                        <span class="subtitle-1"> {{ userData?.name }} </span>
+                    </div>
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Father's Name:</span>
+                        <span class="subtitle-1"> {{ userData?.fatherName }} </span>
+                    </div>
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Mother's Name:</span>
+                        <span class="subtitle-1"> {{ userData?.motherName }} </span>
+                    </div>
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Husband/Guardian's Name:</span>
+                        <span class="subtitle-1"> {{ userData?.guardianName }} </span>
+                    </div>
+                    <div fxFlex="66" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Present Address:</span>
+                        <span class="subtitle-1"> {{ userData?.address }} </span>
+                    </div>
+                    <div fxFlex="100">
+                        <fieldset fxFLex="100" fxLayout="row wrap" class="border-radius-8">
+                            <legend class="subtitle-2">Permanent Address</legend>
+                            <div fxFlex="25" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                                <span class="subtitle-2">Village:</span>
+                                <span class="subtitle-1"> {{ userData?.village }} </span>
+                            </div>
+                            <div fxFlex="25" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                                <span class="subtitle-2">Post Office:</span>
+                                <span class="subtitle-1"> {{ userData?.postOffice }} </span>
+                            </div>
+                            <div fxFlex="25" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                                <span class="subtitle-2">Sub-District:</span>
+                                <span class="subtitle-1"> {{ userData?.subDistrict }} </span>
+                            </div>
+                            <div fxFlex="25" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                                <span class="subtitle-2">District:</span>
+                                <span class="subtitle-1"> {{ userData?.district }} </span>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Phone:</span>
+                        <span class="subtitle-1"> {{ userData?.phone }} </span>
+                    </div>
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Nationality:</span>
+                        <span class="subtitle-1"> {{ userData?.nationality }} </span>
+                    </div>
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Religion:</span>
+                        <span class="subtitle-1"> {{ userData?.religion }} </span>
+                    </div>
+                    <div fxFlex="33" fxLayout="row" fxLayoutGap="8px" class="p-12">
+                        <span class="subtitle-2 w-150">Birth Date:</span>
+                        <span class="subtitle-1"> {{ userData?.birthDate | date : "longDate" }} </span>
+                    </div>
+                </div>
+                <div fxLayout="column" class="p-12">
+                    <span class="subtitle-2">Educational Qualification:</span>
+                    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                        <div fxFlex="100" class="p-8 table-bg">
+                            <span fxFlex="15" class="subtitle-2">Examination Name</span>
+                            <span fxFlex="10" class="subtitle-2">Passing Year</span>
+                            <span fxFlex="25" class="subtitle-2">Institute</span>
+                            <span fxFlex="25" class="subtitle-2">Board/University</span>
+                            <span fxFlex="15" class="subtitle-2">Roll No.</span>
+                            <span fxFlex="10" class="subtitle-2">Division/GPA</span>
+                        </div>
+                        <mat-divider class="p-8"></mat-divider>
+                        <div fxLayout="column" fxFlex="100" fxLayoutGap="8px" class="p-8">
+                            <ng-container *ngFor="let info of userData?.academicInfo">
+                                <div>
+                                    <span fxFlex="15" class="subtitle-1"> {{ info.examName }} </span>
+                                    <span fxFlex="10" class="subtitle-1"> {{ info.passingYear }} </span>
+                                    <span fxFlex="25" class="subtitle-1"> {{ info.institute }} </span>
+                                    <span fxFlex="25" class="subtitle-1"> {{ info.board }} </span>
+                                    <span fxFlex="15" class="subtitle-1"> {{ info.examRoll }} </span>
+                                    <span fxFlex="10" class="subtitle-1"> {{ info.GPA }} </span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="column" class="p-12">
+                    <span class="subtitle-2">Registered courses for this examination:</span>
+                    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" class="">
+                        <div fxFlex="100" class="p-8 table-bg">
+                            <span fxFlex="5" class="subtitle-2">No.</span>
+                            <span fxFlex="25" class="subtitle-2">Course Code</span>
+                            <span fxFlex="55" class="subtitle-2">Course Title</span>
+                            <span fxFlex="15" class="subtitle-2">Credit</span>
+                        </div>
+                        <mat-divider class="p-8"></mat-divider>
+                        <div fxLayout="column" fxFlex="100" fxLayoutGap="8px" class="p-8">
+                            <ng-container *ngFor="let info of userData?.courses; let i = index">
+                                <div>
+                                    <span fxFlex="5" class="subtitle-1"> {{ i + 1 }} </span>
+                                    <span fxFlex="25" class="subtitle-1"> {{ info.courseCode }} </span>
+                                    <span fxFlex="55" class="subtitle-1"> {{ info.courseName }} </span>
+                                    <span fxFlex="15" class="subtitle-1"> {{ info.courseCredits }} </span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-12" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div>
+                        <span class="subtitle-1 color-custom">[To be filled by Exam controller office]</span>
+                    </div>
+                    <div fxLayout="column" fxLayoutALign="start center">
+                        <hr class="w-200 border" />
+                        <div class="m-0 text-align-center">
+                            <span>examinee's signature & date</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-12" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                    <span class="subtitle-2">Examination start date:</span>
+                    <span class="subtitle-1"> {{ examData?.examDate | date : "dd-MM-YYYY" }} </span>
+                </div>
+                <div class="p-12" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="12px">
+                    <div fxLayout="column" fxLayoutAlign="start stretch">
+                        <div class="border-table" style="background-color: #ffbdf7" fxLayoutAlign="center center">
+                            <span class="p-4">To be used by bank</span>
+                        </div>
+                        <div class="border-table" fxLayout="row" fxLayoutAlign="start start">
+                            <div class="border-table p-4">Scroll No.</div>
+                            <div class="border-table p-4">signature, seal and date of money receipt</div>
                         </div>
                     </div>
                 </div>

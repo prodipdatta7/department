@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
@@ -90,6 +90,8 @@ export class UserService {
     }
 
     getUserByEmail(email: string): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/get-by-email`, { email: email }, this.httpOptions);
+        let params = new HttpParams();
+        if (email) params = params.append('email', email);
+        return this.http.get<any>(`${this.apiUrl}/getByEmail`, { observe: 'response', params: { email: email } });
     }
 }

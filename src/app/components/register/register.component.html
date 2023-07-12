@@ -51,8 +51,13 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="stretch center">
                     <mat-form-field appearance="outline" style="margin-right: 12px">
-                        <mat-label>Address</mat-label>
-                        <input matInput type="text" formControlName="address" />
+                        <mat-label>Semester</mat-label>
+                        <input matInput type="text" formControlName="semester" [matAutocomplete]="classComplete" />
+                        <mat-autocomplete #classComplete="matAutocomplete">
+                            <mat-option *ngFor="let class of CLASSES" [value]="class.value">
+                                <span class="subtitle-2"> {{ class.title }} </span>
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label>Session</mat-label>
