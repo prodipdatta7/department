@@ -53,8 +53,12 @@ export class UserService {
     getUserById(id: string | null): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/get-user/${id}`);
     }
-    getUserList(): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/get-users`);
+    getUserList(query?: any): Observable<any> {
+        let queries = new HttpParams();
+        if (query) {
+            queries = queries.append('name', query.name);
+        }
+        return this.http.get<any>(`${this.apiUrl}/get-users`, { observe: 'response', params: queries });
     }
     getUserData() {
         const token = localStorage.getItem('token');
@@ -93,5 +97,9 @@ export class UserService {
         let params = new HttpParams();
         if (email) params = params.append('email', email);
         return this.http.get<any>(`${this.apiUrl}/getByEmail`, { observe: 'response', params: { email: email } });
+    }
+
+    deleteUserById(Id: any): Observable<any> {
+        return this.http.delete<any>(`${this.apiUrl}/remove/${Id}`);
     }
 }

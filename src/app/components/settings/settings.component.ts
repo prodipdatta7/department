@@ -293,7 +293,7 @@ export class SettingsComponent implements OnInit {
         return payload;
     }
 
-    async onSave() {
+    onSave() {
         this.updating = true;
         let payload = this.preparePayload();
         const subscriptions: any[] = [];

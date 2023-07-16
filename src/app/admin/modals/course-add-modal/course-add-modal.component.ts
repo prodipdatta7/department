@@ -25,7 +25,6 @@ export class CourseAddModalComponent {
     ) {}
 
     ngOnInit(): void {
-        console.log(this.data);
         this.initForm();
     }
 
@@ -47,8 +46,8 @@ export class CourseAddModalComponent {
             this.courseForm.get('courseCoverageDepartment')?.setValue(this.data.course.courseCoverageDepartment);
         }
     }
-    onClose() {
-        this.dialogRef.close();
+    onClose(text?: string) {
+        this.dialogRef.close(text);
     }
     onSave() {
         this.actionFailed = false;
@@ -58,7 +57,7 @@ export class CourseAddModalComponent {
             this.adminService.updateCourse(Id, payload).subscribe(
                 () => {
                     this.commonService.openSnackbar('Success!! Course updated.');
-                    this.onClose();
+                    this.onClose('success');
                 },
                 () => {
                     this.commonService.openSnackbar('Error! Course did not update.');
@@ -69,7 +68,7 @@ export class CourseAddModalComponent {
             this.adminService.addCourse(payload).subscribe(
                 () => {
                     this.commonService.openSnackbar('Success!! Course added.');
-                    this.onClose();
+                    this.onClose('success');
                 },
                 (error: any) => {
                     this.commonService.openSnackbar('Error! Course did not add.');

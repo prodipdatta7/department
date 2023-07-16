@@ -5,7 +5,7 @@
 .title {
     font-size: 18px;
     font-weight: 600;
-    font-family: "Poppins" sans-serif;
+    font-family: "Poppins", sans-serif;
     letter-spacing: 0.8px;
     line-height: 24px;
 }
@@ -25,5 +25,38 @@
     border-radius: 8px;
     &::-webkit-scrollbar {
         display: none;
+    }
+}
+.row:hover {
+    background: rgb(146, 180, 236, 30%);
+}
+.height-scroll {
+    max-height: calc(100vh - 288px);
+    overflow-y: auto;
+}
+
+.height-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.action {
+    background: rgb(148, 145, 0, 70%);
+    border-radius: 50%;
+    color: #fff;
+}
+:host ::ng-deep .search-form {
+    .mat-mdc-text-field-wrapper {
+        height: 48px !important;
+        min-width: 600px !important;
+        background-color: #fff;
+    }
+    .mat-mdc-form-field-infix {
+        padding-top: 12px !important;
+        min-width: 200px !important;
+        max-width: 500px !important;
+    }
+    .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+        width: 0 !important;
+        height: 0 !important;
     }
 }

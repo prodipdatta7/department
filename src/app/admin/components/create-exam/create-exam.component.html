@@ -1,0 +1,193 @@
+<div class="bg-main-color p-12">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="!loading" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px" class="p-12 bg-color-white border-radius-4">
+            <mat-icon color="primary">layers</mat-icon>
+            <span class="headline-5"> {{ this.mode == "create" ? "Create" : "Update" }} Examination</span>
+        </div>
+        <div class="p-24 bg-color-white border-radius-4 courseHeight">
+            <form [formGroup]="examForm">
+                <div fxLayout="row wrap">
+                    <mat-form-field appearance="outline" fxFlex="60" class="p-4">
+                        <mat-label>Exam Name</mat-label>
+                        <input matInput type="text" formControlName="examName" class="subtitle-2" required />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4" (click)="openDatePicker.open()">
+                        <mat-label>Regi. Open Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="openDatePicker"
+                            (click)="openDatePicker.open()"
+                            class="subtitle-2"
+                            formControlName="registrationOpenDate"
+                        />
+                        <mat-datepicker-toggle matIconSuffix [for]="openDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #openDatePicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4" (click)="closeDatePicker.open()">
+                        <mat-label>Regi. Close Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="closeDatePicker"
+                            (click)="closeDatePicker.open()"
+                            formControlName="registrationCloseDate"
+                            class="subtitle-2"
+                            required
+                        />
+                        <mat-datepicker-toggle matIconSuffix [for]="closeDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #closeDatePicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4" (click)="examDatePicker.open()">
+                        <mat-label>Exam Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="examDatePicker"
+                            (click)="examDatePicker.open()"
+                            formControlName="examDate"
+                            class="subtitle-2"
+                            required
+                        />
+                        <mat-datepicker-toggle matIconSuffix [for]="examDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #examDatePicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4">
+                        <mat-label>Exam Centre</mat-label>
+                        <input
+                            matInput
+                            [matAutocomplete]="centerComplete"
+                            type="text"
+                            formControlName="examCentre"
+                            class="subtitle-2"
+                            required
+                        />
+                        <mat-autocomplete #centerComplete="matAutocomplete">
+                            <mat-option *ngFor="let status of CENTRE" [value]="status">
+                                <span class="subtitle-1">{{ status }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4">
+                        <mat-label>Semester</mat-label>
+                        <input
+                            matInput
+                            [matAutocomplete]="semesterComplete"
+                            formControlName="semester"
+                            class="subtitle-2"
+                            required
+                        />
+                        <mat-autocomplete #semesterComplete="matAutocomplete">
+                            <mat-option *ngFor="let status of SEMESTER" [value]="status">
+                                <span class="subtitle-1">{{ status }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4">
+                        <mat-label>Year</mat-label>
+                        <input matInput [matAutocomplete]="yearComplete" formControlName="year" class="subtitle-2" required />
+                        <mat-autocomplete #yearComplete="matAutocomplete">
+                            <mat-option *ngFor="let status of YEAR" [value]="status">
+                                <span class="subtitle-1">{{ status }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4">
+                        <mat-label>Status</mat-label>
+                        <input matInput [matAutocomplete]="statusComplete" formControlName="status" class="subtitle-2" required />
+                        <mat-autocomplete #statusComplete="matAutocomplete">
+                            <mat-option *ngFor="let status of STATUS" [value]="status">
+                                <span class="subtitle-1">{{ status }}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </form>
+            <div class="mb-20" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                <mat-icon color="primary">dehaze</mat-icon>
+                <span class="subtitle-1">Add Courses for this examination</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="p-20 w-100-p" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+                <div
+                    *ngIf="CourseInfo?.controls?.length"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="20px"
+                    class="headers subtitle-2"
+                >
+                    <span fxFlex="20">Course Code</span>
+                    <span fxFlex="60">Course Name</span>
+                    <span fxFlex="20">Course Credits</span>
+                    <span fxFlex="2"></span>
+                </div>
+                <form [formGroup]="examForm">
+                    <div formArrayName="courses">
+                        <div *ngFor="let info of CourseInfo?.controls; let i = index" [formGroupName]="i">
+                            <div class="subtitle-2" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlex="100">
+                                <mat-form-field appearance="outline" fxFlex="20">
+                                    <input
+                                        [matAutocomplete]="auto"
+                                        type="text"
+                                        matInput
+                                        placeholder="Type Course Code"
+                                        formControlName="courseCode"
+                                        (click)="openInputBoxForCode(i)"
+                                    />
+                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event, i)">
+                                        <mat-option *ngFor="let course of filteredCourses | async" [value]="course">
+                                            {{ course.courseCode }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="60">
+                                    <input
+                                        type="text"
+                                        matInput
+                                        placeholder="Type Course Name"
+                                        formControlName="courseName"
+                                        (click)="openInputBoxForName(i)"
+                                        [matAutocomplete]="autoName"
+                                    />
+                                    <mat-autocomplete #autoName="matAutocomplete" (optionSelected)="optionSelected($event, i)">
+                                        <mat-option *ngFor="let course of filteredCourses | async" [value]="course">
+                                            {{ course.courseName }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="20">
+                                    <input
+                                        type="number"
+                                        matInput
+                                        placeholder="Type Course Credits"
+                                        formControlName="courseCredits"
+                                        readonly
+                                    />
+                                </mat-form-field>
+                                <div fxFlex="2" fxLayout="row" fxLayoutAlign="start start">
+                                    <mat-icon class="cursor-pointer" color="warn" (click)="removeCourse(i)">delete</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <button
+                            [disabled]="CourseInfo.invalid"
+                            mat-raised-button
+                            color="primary"
+                            class="button-text"
+                            (click)="addCourse()"
+                        >
+                            Add Course
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" class="pr-24 pt-12 pb-12 bg-color-white border-radius-4">
+            <button mat-stroked-button color="warn" class="button-text" (click)="back()">Cancel</button>
+            <button [disabled]="examForm.invalid" mat-raised-button color="primary" class="button-text" (click)="onSubmit()">
+                {{ this.mode }} Exam
+            </button>
+            <mat-progress-spinner diameter="25" *ngIf="submitted"></mat-progress-spinner>
+        </div>
+    </div>
+</div>

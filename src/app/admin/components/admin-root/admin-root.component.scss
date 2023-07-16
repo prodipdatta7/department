@@ -1,13 +1,13 @@
 .mat-sidenav {
     width: 200px !important;
     border-right: 1px solid #f1f1f1;
+    min-height: calc(100vh - 64px);
 }
 
 .mat-sidenav-content {
-    height: calc(100vh - 104px);
+    min-height: calc(100vh - 64px);
     width: calc(100vw - 40px);
-    padding: 20px;
-    overflow-x: scroll;
+    overflow-y: auto;
 }
 
 a {
@@ -16,4 +16,7 @@ a {
 
 .admin-menu {
     padding: 8px 0 8px 20px;
+    &:hover {
+        background: rgb(146, 180, 236, 30%);
+    }
 }

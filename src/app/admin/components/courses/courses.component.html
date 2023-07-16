@@ -1,36 +1,80 @@
-<mat-progress-bar *ngIf="!dataLoaded" mode="indeterminate"></mat-progress-bar>
-
-<ng-container *ngIf="dataLoaded">
-    <div fxLayout="row" fxLayoutAlign="stretch center" class="topper">
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="50">
-            <span class="title">Courses</span>
+<div class="p-12 bg-main-color">
+    <mat-progress-bar *ngIf="!dataLoaded" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="dataLoaded" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="12px" class="bg-color-white p-12 border-radius-4">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <mat-icon color="primary">hub</mat-icon>
+                <span class="headline-5"
+                    >Course List <span>({{ this.courses.length }})</span></span
+                >
+            </div>
+            <form [formGroup]="search" class="search-form" fxLayoutAlign="center center">
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="Name" placeholder="Search..." />
+                    <mat-icon class="mb-6" matPrefix color="primary">search</mat-icon>
+                    <mat-icon
+                        *ngIf="search.get('Name')?.value"
+                        class="mb-6 cursor-pointer"
+                        (click)="search.get('Name')?.setValue('')"
+                        matSuffix
+                        color="warn"
+                        >clear</mat-icon
+                    >
+                </mat-form-field>
+            </form>
+            <button mat-raised-button color="primary" class="button-text" (click)="addCourse()">Add Course</button>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="50">
-            <button mat-raised-button color="primary" (click)="addCourse()">Add Course</button>
+        <div fxLayout="column" fLayoutAlign="start stretch" class="bg-color-white p-12 border-radius-4">
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="pl-24 pr-24 pt-12 pb-12">
+                    <span fxFlex="20" class="subtitle-1">Code</span>
+                    <span fxFlex="60" class="subtitle-1">Title</span>
+                    <span fxFlex="18" class="subtitle-1">Credits</span>
+                    <span fxFlex="2" class="subtitle-1"></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="p-12 height-scroll">
+                    <ng-container *ngFor="let course of courses">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="p-12 row cursor-pointer">
+                            <span fxFlex="20" class="subtitle-2 text-truncate" matTooltip="{{ course.courseCode }}">{{
+                                course.courseCode
+                            }}</span>
+                            <span fxFlex="60" class="subtitle-2"> {{ course.courseName }} </span>
+                            <span fxFlex="18" class="subtitle-2"> {{ course.courseCredits }} </span>
+                            <mat-icon
+                                class="action"
+                                *ngIf="!course.isExpanded"
+                                fxFlex="2"
+                                color="primary"
+                                (click)="toggleRowExpansion(course._id)"
+                                >expand_more</mat-icon
+                            >
+                            <mat-icon
+                                class="action"
+                                *ngIf="course.isExpanded"
+                                fxFlex="2"
+                                color="primary"
+                                (click)="toggleRowExpansion(course._id)"
+                                >expand_less</mat-icon
+                            >
+                        </div>
+                        <ng-container *ngIf="course.isExpanded">
+                            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" class="p-12 mat-elevation-z1">
+                                <button mat-raised-button color="primary" class="button-text" (click)="seeDetails(course._id)">
+                                    See Details
+                                </button>
+                                <button mat-raised-button color="accent" class="button-text" (click)="editCourse(course._id)">
+                                    Edit
+                                </button>
+                                <button mat-raised-button color="warn" class="button-text" (click)="deleteCourse(course._id)">
+                                    Delete
+                                </button>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <mat-divider></mat-divider>
+            </div>
         </div>
     </div>
-    <div class="mat-elevation-z4">
-        <div class="table">
-            <table matSort mat-table [dataSource]="dataSource" class="">
-                <ng-container *ngFor="let column of columnDefs" [matColumnDef]="column.field">
-                    <th mat-header-cell *matHeaderCellDef>
-                        {{ column.label }}
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="column.show">{{ element[column.field] }}</span>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr
-                    mat-row
-                    *matRowDef="let row; columns: displayedColumns"
-                    (click)="selectCourse(row)"
-                    style="cursor: pointer"
-                ></tr>
-            </table>
-        </div>
-        <mat-divider></mat-divider>
-        <mat-paginator #paginator [pageSizeOptions]="[5, 7, 10, 20]" showFirstLastButtons aria-label="Select page of course table">
-        </mat-paginator>
-    </div>
-</ng-container>
+</div>

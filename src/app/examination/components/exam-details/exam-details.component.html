@@ -73,7 +73,7 @@
         <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" class="p-20 bg-color-white border-radius-8">
             <button mat-stroked-button color="primary" class="button-text" (click)="backToExamTab()">Back</button>
             <button
-                *ngIf="examData?.status === 'upcomming'"
+                *ngIf="examData?.status === 'upcomming' && !this.isAdmin"
                 [disabled]="!isRegistrationOpened(examData?.registrationOpenDate, examData?.registrationCloseDate)"
                 mat-raised-button
                 color="primary"

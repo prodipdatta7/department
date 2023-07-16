@@ -1,22 +1,27 @@
 <div fxLayout="row" fxLayoutAlign="start start">
-    <div class="mat-sidenav">
+    <div class="mat-sidenav bg-main-color">
         <div fxLayout="column" fxlayoutAlign="start center" fxFlex="100">
             <div fxLayout="row" fxLayoutAlign="center center">
-                <h2>Admin</h2>
+                <span class="headline-6 p-12">Admin</span>
             </div>
-            <div fxLayout="column" fxlayoutAlign="start center" fxFlex="100">
+            <mat-divider></mat-divider>
+            <div fxLayout="column" fxlayoutAlign="start center" fxFlex="100" class="mt-8">
                 <div class="admin-menu" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
-                    <mat-icon color="primary">list</mat-icon>
-                    <a routerLink="user">Users</a>
+                    <mat-icon color="primary">layers</mat-icon>
+                    <a routerLink="users" class="subtitle-2">Users</a>
                 </div>
                 <div class="admin-menu" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
-                    <mat-icon color="primary">list</mat-icon>
-                    <a routerLink="courses">Courses</a>
+                    <mat-icon color="primary">layers</mat-icon>
+                    <a routerLink="courses" class="subtitle-2">Courses</a>
+                </div>
+                <div class="admin-menu" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                    <mat-icon color="primary">layers</mat-icon>
+                    <a routerLink="examinations" class="subtitle-2">Examination</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mat-sidenav-content">
+    <div class="mat-sidenav-content bg-main-color ml-20">
         <router-outlet></router-outlet>
     </div>
 </div>

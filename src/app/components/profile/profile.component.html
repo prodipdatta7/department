@@ -1,283 +1,287 @@
 <div fxLayout="row" fxLayoutAlign="stretch start" fxLayoutgap="20px" class="bg-main-color">
     <div fxFlex="100" class="p-20" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
-        <div fxFlex="100" fxLayout="row" fxLayoutAlign="end start">
-            <button mat-raised-button color="primary" (click)="editProfile()">Edit Profile</button>
-        </div>
-        <div
-            class="basic_info border-radius-8 pb-20 bg-color"
-            fxFlex="100"
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="12px"
-        >
-            <div fxLayout="column" class="m-16">
-                <div class="profile_img mat-elevation-z0">
-                    <img
-                        class="profile_photo img"
-                        [src]="imagePreview"
-                        onerror="this.src='assets/images/profile_avatar.jpg'"
-                        alt="profile photo"
-                    />
-                    <div class="buton-control w-100-p" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="4px">
-                        <button color="accent" mat-icon-button class="zoom" (click)="zoom()"><mat-icon>zoom_in</mat-icon></button>
-                    </div>
-                </div>
-                <input type="file" #filePicker (change)="onImagePicked($event)" />
+        <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" class="p-12 bg-color-white border-radius-8">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <mat-icon color="primary">hub</mat-icon>
+                <span class="headline-5">Account Information</span>
             </div>
-            <div class="profile_info" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-                <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-                    <div fxLayout="row" class="profile-content">
-                        <span class="w-120">Name </span>
-                        <span>{{ userProfileData?.name }}</span>
-                    </div>
-                    <div fxLayout="row" class="profile-content">
-                        <span class="w-120">Email </span>
-                        <span>{{ userProfileData?.email }}</span>
-                    </div>
-                    <div fxLayout="row" class="profile-content">
-                        <span class="w-120">Department </span>
-                        <span>{{ userProfileData?.department }}</span>
-                    </div>
-                    <div fxLayout="row" class="profile-content">
-                        <span class="w-120">Session </span>
-                        <span>{{ userProfileData?.session }}</span>
-                    </div>
-                </div>
-                <div fxLayout="row" class="profile-content">
-                    <span>Bangabandhu Sheikh Mujibur Rahman Science & Technology University, Gopalganj-8100</span>
-                </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <button *ngIf="isAdmin" mat-stroked-button color="warn" (click)="back()">Back</button>
+                <button mat-raised-button color="primary" (click)="editProfile()">Update Profile</button>
             </div>
         </div>
-        <div
-            id="basicInfo"
-            class="border-radius-8 p-20 bg-color"
-            fxFlex="100"
-            fxLayout="column"
-            fxLayoutAlign="start stretch"
-            fxLayoutGap="12px"
-        >
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div class="title" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-                    <mat-icon>list_alt</mat-icon>
-                    <span>Student Information</span>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" class="scrollHeight border-radius-8">
+            <div
+                class="basic_info border-radius-8 pb-20 bg-color"
+                fxFlex="100"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="12px"
+            >
+                <div fxLayout="column" class="m-16">
+                    <div class="profile_img mat-elevation-z0">
+                        <img
+                            class="profile_photo img"
+                            [src]="imagePreview"
+                            onerror="this.src='assets/images/profile_avatar.jpg'"
+                            alt="profile photo"
+                        />
+                        <div class="buton-control w-100-p" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="4px">
+                            <button color="accent" mat-icon-button class="zoom" (click)="zoom()">
+                                <mat-icon>zoom_in</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="file" #filePicker (change)="onImagePicked($event)" />
                 </div>
-                <!-- <button mat-icon-button color="warn" matTooltip="Warning!!! There are some data which needs to be updated!!!">
-                    <mat-icon>warning</mat-icon>
-                </button> -->
+                <div class="profile_info" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                        <div fxLayout="row" class="profile-content">
+                            <span class="w-120">Name </span>
+                            <span>{{ userProfileData?.name }}</span>
+                        </div>
+                        <div fxLayout="row" class="profile-content">
+                            <span class="w-120">Email </span>
+                            <span>{{ userProfileData?.email }}</span>
+                        </div>
+                        <div fxLayout="row" class="profile-content">
+                            <span class="w-120">Department </span>
+                            <span>{{ userProfileData?.department }}</span>
+                        </div>
+                        <div fxLayout="row" class="profile-content">
+                            <span class="w-120">Session </span>
+                            <span>{{ userProfileData?.session }}</span>
+                        </div>
+                    </div>
+                    <div fxLayout="row" class="profile-content">
+                        <span>Bangabandhu Sheikh Mujibur Rahman Science & Technology University, Gopalganj-8100</span>
+                    </div>
+                </div>
             </div>
-            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="p-12">
-                <div class="section" fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Name</span>
-                        <span class="subtitle-1">{{ userProfileData?.name }}</span>
-                    </div>
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Father's Name</span>
-                        <span *ngIf="userProfileData?.fatherName; else default" class="subtitle-1">{{
-                            userProfileData?.fatherName
-                        }}</span>
-                    </div>
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Mother's Name</span>
-                        <span *ngIf="userProfileData?.motherName; else default" class="subtitle-1">{{
-                            userProfileData?.motherName
-                        }}</span>
-                    </div>
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Husband/Guardian's Name</span>
-                        <span *ngIf="userProfileData?.guardianName; else default" class="subtitle-1">{{
-                            userProfileData?.guardianName
-                        }}</span>
+            <div
+                id="basicInfo"
+                class="border-radius-8 p-20 bg-color"
+                fxFlex="100"
+                fxLayout="column"
+                fxLayoutAlign="start stretch"
+                fxLayoutGap="12px"
+            >
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="title" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+                        <mat-icon>list_alt</mat-icon>
+                        <span>Student Information</span>
                     </div>
                 </div>
-                <mat-divider></mat-divider>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
-                    <div fxFlex="75%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Present Address</span>
-                        <span *ngIf="userProfileData?.address; else default" class="subtitle-1">{{
-                            userProfileData?.address
-                        }}</span>
+                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="p-12">
+                    <div class="section" fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Name</span>
+                            <span class="subtitle-1">{{ userProfileData?.name }}</span>
+                        </div>
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Father's Name</span>
+                            <span *ngIf="userProfileData?.fatherName; else default" class="subtitle-1">{{
+                                userProfileData?.fatherName
+                            }}</span>
+                        </div>
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Mother's Name</span>
+                            <span *ngIf="userProfileData?.motherName; else default" class="subtitle-1">{{
+                                userProfileData?.motherName
+                            }}</span>
+                        </div>
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Husband/Guardian's Name</span>
+                            <span *ngIf="userProfileData?.guardianName; else default" class="subtitle-1">{{
+                                userProfileData?.guardianName
+                            }}</span>
+                        </div>
                     </div>
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Phone</span>
-                        <span *ngIf="userProfileData?.phone; else default" class="subtitle-1">{{ userProfileData?.phone }}</span>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
+                        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Present Address</span>
+                            <span *ngIf="userProfileData?.address; else default" class="subtitle-1">{{
+                                userProfileData?.address
+                            }}</span>
+                        </div>
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Phone</span>
+                            <span *ngIf="userProfileData?.phone; else default" class="subtitle-1">{{
+                                userProfileData?.phone
+                            }}</span>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
+                        <fieldset fxLayout="column" fxFlex="100%">
+                            <legend class="subtitle-1">Permanent Address</legend>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
+                                <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                                    <span class="subtitle-2">Village</span>
+                                    <span *ngIf="userProfileData?.village; else default" class="subtitle-1">{{
+                                        userProfileData?.village
+                                    }}</span>
+                                </div>
+                                <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                                    <span class="subtitle-2">Post Office</span>
+                                    <span *ngIf="userProfileData?.postOffice; else default" class="subtitle-1">{{
+                                        userProfileData?.postOffice
+                                    }}</span>
+                                </div>
+                                <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                                    <span class="subtitle-2">Sub-District</span>
+                                    <span *ngIf="userProfileData?.subDistrict; else default" class="subtitle-1">{{
+                                        userProfileData?.subDistrict
+                                    }}</span>
+                                </div>
+                                <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                                    <span class="subtitle-2">District</span>
+                                    <span *ngIf="userProfileData?.district; else default" class="subtitle-1">{{
+                                        userProfileData?.district
+                                    }}</span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Nationality</span>
+                            <span *ngIf="userProfileData?.nationality; else default" class="subtitle-1">{{
+                                userProfileData?.nationality
+                            }}</span>
+                        </div>
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Religion</span>
+                            <span *ngIf="userProfileData?.religion; else default" class="subtitle-1">{{
+                                userProfileData?.religion
+                            }}</span>
+                        </div>
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Birth Date</span>
+                            <span *ngIf="userProfileData?.birthDate; else default" class="subtitle-1">{{
+                                userProfileData?.birthDate | date : "dd-MM-YYYY"
+                            }}</span>
+                        </div>
+                        <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+                            <span class="subtitle-2">Hall Name</span>
+                            <span *ngIf="userProfileData?.hallName; else default" class="subtitle-1">{{
+                                userProfileData?.hallName
+                            }}</span>
+                        </div>
+                    </div>
+
+                    <ng-template #default>
+                        <span class="caption-2"> - No data found</span>
+                    </ng-template>
+                </div>
+            </div>
+            <div
+                id="academics"
+                class="border-radius-8 p-20 bg-color"
+                fxFlex="100"
+                fxLayout="column"
+                fxLayoutAlign="start stretch"
+                fxLayoutGap="12px"
+            >
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="title" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+                        <mat-icon>list_alt</mat-icon>
+                        <span>Academic History</span>
                     </div>
                 </div>
-                <mat-divider></mat-divider>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
-                    <fieldset fxLayout="column" fxFlex="100%">
-                        <legend class="subtitle-1">Permanent Address</legend>
-                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
-                            <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                                <span class="subtitle-2">Village</span>
-                                <span *ngIf="userProfileData?.village; else default" class="subtitle-1">{{
-                                    userProfileData?.village
-                                }}</span>
-                            </div>
-                            <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                                <span class="subtitle-2">Post Office</span>
-                                <span *ngIf="userProfileData?.postOffice; else default" class="subtitle-1">{{
-                                    userProfileData?.postOffice
-                                }}</span>
-                            </div>
-                            <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                                <span class="subtitle-2">Sub-District</span>
-                                <span *ngIf="userProfileData?.subDistrict; else default" class="subtitle-1">{{
-                                    userProfileData?.subDistrict
-                                }}</span>
-                            </div>
-                            <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                                <span class="subtitle-2">District</span>
-                                <span *ngIf="userProfileData?.district; else default" class="subtitle-1">{{
-                                    userProfileData?.district
-                                }}</span>
-                            </div>
+                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="p-12">
+                    <fieldset class="section w-100-p" fxLayout="column" fxLayoutAlign="start center" fxFlex="100">
+                        <div class="headers w-100-p mat-elevation-z2 p-12" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+                            <div fxFlex="15"><span class="subtitle-2">Exam Name</span></div>
+                            <div fxFlex="10"><span class="subtitle-2">Passing Year</span></div>
+                            <div fxFlex="30"><span class="subtitle-2">Institute</span></div>
+                            <div fxFlex="25"><span class="subtitle-2">Board/University</span></div>
+                            <div fxFlex="10"><span class="subtitle-2">Exam Roll</span></div>
+                            <div fxFlex="10"><span class="subtitle-2">Class/GPA</span></div>
+                        </div>
+                        <div class="w-100-p p-12" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" fxFlex="100">
+                            <ng-container *ngFor="let item of userProfileData?.academicHistory || academics; let Last = last">
+                                <div class="py-4" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+                                    <div fxFlex="15">
+                                        <span class="subtitle-1">{{ item?.examName }}</span>
+                                    </div>
+                                    <div fxFlex="10">
+                                        <span class="subtitle-1"> {{ item?.passingYear }} </span>
+                                    </div>
+                                    <div fxFlex="30">
+                                        <span class="subtitle-1"> {{ item?.institute }} </span>
+                                    </div>
+                                    <div fxFlex="25">
+                                        <span class="subtitle-1"> {{ item?.board }} </span>
+                                    </div>
+                                    <div fxFlex="10">
+                                        <span class="subtitle-1"> {{ item?.examRoll }} </span>
+                                    </div>
+                                    <div fxFlex="10">
+                                        <span class="subtitle-1"> {{ item?.GPA }} </span>
+                                    </div>
+                                </div>
+                                <mat-divider></mat-divider>
+                            </ng-container>
                         </div>
                     </fieldset>
-                </div>
 
-                <mat-divider></mat-divider>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100%">
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Nationality</span>
-                        <span *ngIf="userProfileData?.nationality; else default" class="subtitle-1">{{
-                            userProfileData?.nationality
-                        }}</span>
-                    </div>
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Religion</span>
-                        <span *ngIf="userProfileData?.religion; else default" class="subtitle-1">{{
-                            userProfileData?.religion
-                        }}</span>
-                    </div>
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Birth Date</span>
-                        <span *ngIf="userProfileData?.birthDate; else default" class="subtitle-1">{{
-                            userProfileData?.birthDate | date : "dd-MM-YYYY"
-                        }}</span>
-                    </div>
-                    <div fxFlex="25%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
-                        <span class="subtitle-2">Hall Name</span>
-                        <span *ngIf="userProfileData?.hallName; else default" class="subtitle-1">{{
-                            userProfileData?.hallName
-                        }}</span>
+                    <ng-template #default>
+                        <span class="caption-2"> - No data found</span>
+                    </ng-template>
+                </div>
+            </div>
+            <div
+                id="courses"
+                class="border-radius-8 p-20 bg-color"
+                fxFlex="100"
+                fxLayout="column"
+                fxLayoutAlign="start stretch"
+                fxLayoutGap="12px"
+            >
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="title" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+                        <mat-icon>list_alt</mat-icon>
+                        <span>Registered Courses</span>
                     </div>
                 </div>
-
-                <ng-template #default>
-                    <span class="caption-2"> - No data found</span>
-                </ng-template>
-            </div>
-        </div>
-        <div
-            id="academics"
-            class="border-radius-8 p-20 bg-color"
-            fxFlex="100"
-            fxLayout="column"
-            fxLayoutAlign="start stretch"
-            fxLayoutGap="12px"
-        >
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div class="title" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-                    <mat-icon>list_alt</mat-icon>
-                    <span>Academic History</span>
+                <div class="p-12">
+                    <p class="subtitle-2">
+                        Your Current Semester: <span class="subtitle-1"> {{ userProfileData?.semester || "-" }} </span>
+                    </p>
                 </div>
-                <!-- <button mat-icon-button color="warn" matTooltip="Warning!!! There are some data which needs to be updated!!!">
-                    <mat-icon>warning</mat-icon>
-                </button> -->
-            </div>
-            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="p-12">
-                <fieldset class="section w-100-p" fxLayout="column" fxLayoutAlign="start center" fxFlex="100">
-                    <div class="headers w-100-p mat-elevation-z2 p-12" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
-                        <div fxFlex="15"><span class="subtitle-2">Exam Name</span></div>
-                        <div fxFlex="10"><span class="subtitle-2">Passing Year</span></div>
-                        <div fxFlex="30"><span class="subtitle-2">Institute</span></div>
-                        <div fxFlex="25"><span class="subtitle-2">Board/University</span></div>
-                        <div fxFlex="10"><span class="subtitle-2">Exam Roll</span></div>
-                        <div fxFlex="10"><span class="subtitle-2">Class/GPA</span></div>
-                    </div>
-                    <div class="w-100-p p-12" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" fxFlex="100">
-                        <ng-container *ngFor="let item of userProfileData?.academicHistory || academics; let Last = last">
-                            <div class="py-4" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
-                                <div fxFlex="15">
-                                    <span class="subtitle-1">{{ item?.examName }}</span>
+                <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="p-12">
+                    <fieldset class="section w-100-p" fxLayout="column" fxLayoutAlign="start center" fxFlex="100">
+                        <div class="headers w-100-p mat-elevation-z2 p-12" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+                            <div fxFlex="30"><span class="subtitle-2">Course Code</span></div>
+                            <div fxFlex="60"><span class="subtitle-2">Course Name</span></div>
+                            <div fxFlex="10"><span class="subtitle-2">Credit</span></div>
+                        </div>
+                        <div class="w-100-p p-12" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" fxFlex="100">
+                            <ng-container *ngFor="let item of userProfileData?.registeredCourses || courses; let Last = last">
+                                <div class="py-4" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+                                    <div fxFlex="30">
+                                        <span class="subtitle-1">{{ item?.courseCode }}</span>
+                                    </div>
+                                    <div fxFlex="60">
+                                        <span class="subtitle-1"> {{ item?.courseName }} </span>
+                                    </div>
+                                    <div fxFlex="10">
+                                        <span class="subtitle-1"> {{ item?.courseCredits }} </span>
+                                    </div>
                                 </div>
-                                <div fxFlex="10">
-                                    <span class="subtitle-1"> {{ item?.passingYear }} </span>
-                                </div>
-                                <div fxFlex="30">
-                                    <span class="subtitle-1"> {{ item?.institute }} </span>
-                                </div>
-                                <div fxFlex="25">
-                                    <span class="subtitle-1"> {{ item?.board }} </span>
-                                </div>
-                                <div fxFlex="10">
-                                    <span class="subtitle-1"> {{ item?.examRoll }} </span>
-                                </div>
-                                <div fxFlex="10">
-                                    <span class="subtitle-1"> {{ item?.GPA }} </span>
-                                </div>
-                            </div>
-                            <mat-divider></mat-divider>
-                        </ng-container>
-                    </div>
-                </fieldset>
+                                <mat-divider></mat-divider>
+                            </ng-container>
+                        </div>
+                    </fieldset>
 
-                <ng-template #default>
-                    <span class="caption-2"> - No data found</span>
-                </ng-template>
-            </div>
-        </div>
-        <div
-            id="courses"
-            class="border-radius-8 p-20 bg-color"
-            fxFlex="100"
-            fxLayout="column"
-            fxLayoutAlign="start stretch"
-            fxLayoutGap="12px"
-        >
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div class="title" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-                    <mat-icon>list_alt</mat-icon>
-                    <span>Registered Courses</span>
+                    <ng-template #default>
+                        <span class="caption-2"> - No data found</span>
+                    </ng-template>
                 </div>
-                <!-- <button mat-icon-button color="warn" matTooltip="Warning!!! There are some data which needs to be updated!!!">
-                    <mat-icon>warning</mat-icon>
-                </button> -->
-            </div>
-            <div class="p-12">
-                <p class="subtitle-2">
-                    Your Current Semester: <span class="subtitle-1"> {{ userProfileData?.semester || "-" }} </span>
-                </p>
-            </div>
-            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class="p-12">
-                <fieldset class="section w-100-p" fxLayout="column" fxLayoutAlign="start center" fxFlex="100">
-                    <div class="headers w-100-p mat-elevation-z2 p-12" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
-                        <div fxFlex="30"><span class="subtitle-2">Course Code</span></div>
-                        <div fxFlex="60"><span class="subtitle-2">Course Name</span></div>
-                        <div fxFlex="10"><span class="subtitle-2">Credit</span></div>
-                    </div>
-                    <div class="w-100-p p-12" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" fxFlex="100">
-                        <ng-container *ngFor="let item of userProfileData?.registeredCourses || courses; let Last = last">
-                            <div class="py-4" fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
-                                <div fxFlex="30">
-                                    <span class="subtitle-1">{{ item?.courseCode }}</span>
-                                </div>
-                                <div fxFlex="60">
-                                    <span class="subtitle-1"> {{ item?.courseName }} </span>
-                                </div>
-                                <div fxFlex="10">
-                                    <span class="subtitle-1"> {{ item?.courseCredits }} </span>
-                                </div>
-                            </div>
-                            <mat-divider></mat-divider>
-                        </ng-container>
-                    </div>
-                </fieldset>
-
-                <ng-template #default>
-                    <span class="caption-2"> - No data found</span>
-                </ng-template>
             </div>
         </div>
     </div>

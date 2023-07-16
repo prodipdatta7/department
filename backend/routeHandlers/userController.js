@@ -34,7 +34,12 @@ const send = (data) => {
 
 async function getUsers(req, res) {
     try {
-        const users = await Student.find();
+        let regexExp = {};
+        if (req.query?.name) {
+            Object.assign(regexExp, { name: new RegExp("^" + req.query.name.toLowerCase(), "i") });
+        }
+        console.log("reg", regexExp);
+        const users = await Student.find(regexExp);
         console.log(users);
         res.status(200).json({
             success: true,

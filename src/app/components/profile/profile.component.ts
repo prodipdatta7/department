@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     userProfileData: any;
     academics: any[] = [];
     courses: any[] = [];
+    isAdmin = false;
     constructor(
         private fb: FormBuilder,
         private route: ActivatedRoute,
@@ -33,6 +34,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         if (!this.userService.isStillAuthentic()) this.router.navigateByUrl('login').then();
         const id = this.route.snapshot.paramMap.get('id');
+        this.isAdmin = this.route.snapshot.queryParamMap.get('user') === 'admin';
         this.userService.getUserById(id).subscribe((res) => {
             if (res?.data) {
                 this.userProfileData = res.data;
@@ -112,13 +114,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.saveImage(file);
     }
     saveImage(file: File) {
-        // const payload = this.form.get('image')?.value;
         this.userService.updateUser(file, this.userProfileData._id).subscribe((res: any) => {
             console.log(res);
         });
     }
     editProfile() {
         this.router.navigate([`profile/${this.userProfileData._id}/update`]);
+    }
+    back() {
+        if (this.isAdmin) this.router.navigate(['admin/users']);
     }
     ngOnDestroy(): void {}
 }

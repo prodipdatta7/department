@@ -9,14 +9,23 @@ export class ExamService {
     examApi = 'http://localhost:3000/examinations';
     constructor(private http: HttpClient) {}
 
-    getUpcommingExaminations(status?: any): Observable<any> {
-        let params = new HttpParams();
-        if (status) {
-            params = params.append('status', status);
+    getUpcommingExaminations(query?: any): Observable<any> {
+        let queries = new HttpParams();
+        if (query) {
+            queries = queries.append('examName', query.examName);
         }
-        return this.http.get<any>(`${this.examApi}/getExams`, { observe: 'response', params });
+        return this.http.get<any>(`${this.examApi}/getExams`, { observe: 'response', params: queries });
     }
     getExamById(id: any): Observable<any> {
         return this.http.get<any>(`${this.examApi}/getExamById/${id}`);
+    }
+    deleteById(id: any): Observable<any> {
+        return this.http.delete<any>(`${this.examApi}/remove/${id}`);
+    }
+    createExam(payload: any): Observable<any> {
+        return this.http.post<any>(`${this.examApi}/createExam`, payload);
+    }
+    updateExam(payload: any, Id: any): Observable<any> {
+        return this.http.put<any>(`${this.examApi}/updateExam/${Id}`, payload);
     }
 }

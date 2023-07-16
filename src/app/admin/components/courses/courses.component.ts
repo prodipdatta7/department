@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdminSpecificService } from '../../services/admin-specific.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseAddModalComponent } from '../../modals/course-add-modal/course-add-modal.component';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationModalCourseComponent } from '../../modals/confirmation-modal-course/confirmation-modal.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 
 export interface ICourseModel {
     courseId: string;
@@ -21,37 +23,42 @@ export interface ICourseModel {
     styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit, OnDestroy {
-    courses = [];
-    dataSource!: MatTableDataSource<any>;
-    columnDefs = [
-        { field: 'courseCode', label: 'Course Code', show: true },
-        { field: 'courseName', label: 'Course Name', show: true },
-        { field: 'courseCredits', label: 'Course Credits', show: true },
-        { field: 'courseCoverageSemester', label: 'Semester', show: true },
-    ];
-    displayedColumns = this.columnDefs.map((column) => column.field);
+    courses: any[] = [];
     dataLoaded = false;
-    constructor(private adminService: AdminSpecificService, private dialog: MatDialog) {}
-    @ViewChild('paginator') paginator!: MatPaginator;
-    ngAfterViewInit() {
-        this.dataSource = new MatTableDataSource<any>(this.courses);
-        this.dataSource.paginator = this.paginator;
-        this.dataLoaded = true;
-    }
+    search!: FormGroup;
+    constructor(
+        private adminService: AdminSpecificService,
+        private dialog: MatDialog,
+        private router: Router,
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder
+    ) {}
     ngOnInit(): void {
         this.dataLoaded = false;
         this.getAllCourses();
+        this.initSearchForm();
     }
 
-    async getAllCourses() {
-        console.log('ngOnInit');
-        await this.adminService.getCourses().subscribe(async (response: any) => {
-            this.courses = (await response?.courses) || [];
-            this.dataSource = new MatTableDataSource<any>(this.courses);
-            this.dataSource.paginator = this.paginator;
+    initSearchForm() {
+        this.search = this.formBuilder.group({
+            Name: [''],
+        });
+        this.search
+            .get('Name')
+            ?.valueChanges.pipe(startWith(''), debounceTime(700), distinctUntilChanged())
+            .subscribe((text: string) => {
+                this.getAllCourses({ courseName: text });
+            });
+    }
+
+    getAllCourses(query?: any) {
+        this.adminService.getCourses(query).subscribe((response: any) => {
+            this.courses = response?.body?.courses || [];
+            this.dataLoaded = true;
         });
     }
     selectCourse(course: any) {}
+
     addCourse() {
         const data = {
             title: 'Add Course',
@@ -63,6 +70,44 @@ export class CoursesComponent implements OnInit, OnDestroy {
         };
         const dialogRef = this.dialog.open(CourseAddModalComponent, {
             data: data,
+        });
+        dialogRef.afterClosed().subscribe((res: any) => {
+            if (res === 'success') {
+                this.dataLoaded = false;
+                this.getAllCourses();
+            }
+        });
+    }
+    seeDetails(id: any) {
+        this.router.navigate([`courses/${id}`], { relativeTo: this.route.parent });
+    }
+    editCourse(id: any) {
+        this.router.navigate([`courses/${id}`], {
+            relativeTo: this.route.parent,
+            queryParams: {
+                mode: 'update',
+            },
+            queryParamsHandling: 'merge',
+        });
+    }
+    deleteCourse(id: any) {
+        const dialogRef = this.dialog.open(ConfirmationModalCourseComponent, {
+            data: {
+                id: id,
+                title: 'Course Delete Modal',
+            },
+        });
+        dialogRef.afterClosed().subscribe((res: any) => {
+            if (res === 'deleted') {
+                this.dataLoaded = false;
+                this.getAllCourses();
+            }
+        });
+    }
+    toggleRowExpansion(id: any) {
+        this.courses.forEach((course) => {
+            if (course._id === id) course.isExpanded = !course.isExpanded;
+            else course.isExpanded = false;
         });
     }
 

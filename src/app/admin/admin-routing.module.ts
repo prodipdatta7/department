@@ -4,6 +4,9 @@ import { UsersComponent } from './components/users/users.component';
 import { AdminRootComponent } from './components/admin-root/admin-root.component';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { CoursesComponent } from './components/courses/courses.component';
+import { CourseDetailsComponent } from './components/course-details-&-edit/course-details.component';
+import { ExamComponent } from './components/exam/exam.component';
+import { CreateExamComponent } from './components/create-exam/create-exam.component';
 
 const routes: Routes = [
     {
@@ -11,17 +14,33 @@ const routes: Routes = [
         component: AdminRootComponent,
         children: [
             {
-                path: 'user',
+                path: 'users',
                 component: UsersComponent,
             },
             {
                 path: '',
                 pathMatch: 'full',
-                redirectTo: 'user',
+                redirectTo: 'users',
             },
             {
                 path: 'courses',
                 component: CoursesComponent,
+            },
+            {
+                path: 'courses/:id',
+                component: CourseDetailsComponent,
+            },
+            {
+                path: 'examinations',
+                component: ExamComponent,
+            },
+            {
+                path: 'create-exam',
+                component: CreateExamComponent,
+            },
+            {
+                path: 'examination/update/:id',
+                component: CreateExamComponent,
             },
         ],
     },

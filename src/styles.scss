@@ -37,3 +37,9 @@ div.title {
 .bg-color-white {
     background-color: #fff;
 }
+
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

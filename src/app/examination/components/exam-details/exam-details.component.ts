@@ -13,6 +13,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class ExamDetailsComponent implements OnInit {
     examData: any;
     dataLoaded = false;
+    isAdmin = false;
     constructor(
         private route: ActivatedRoute,
         private examService: ExamService,
@@ -23,6 +24,7 @@ export class ExamDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         const exam_id = this.route.snapshot.paramMap.get('id');
+        this.isAdmin = this.route.snapshot.queryParamMap.get('user') === 'admin';
         this.examService.getExamById(exam_id).subscribe((response: any) => {
             if (response?.exam) this.examData = response?.exam;
             this.dataLoaded = true;
@@ -35,7 +37,9 @@ export class ExamDetailsComponent implements OnInit {
         return Boolean(curDate.getTime() >= new Date(startDate).getTime() && curDate.getTime() < new Date(endDate).getTime());
     }
     backToExamTab() {
-        this.router.navigate(['examination']);
+        if (this.isAdmin) {
+            this.router.navigate(['admin/examinations']);
+        } else this.router.navigate(['examination']);
     }
     register() {
         const dialogref = this.dialog.open(AppRegistrationConfirmModalComponent);

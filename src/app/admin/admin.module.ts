@@ -26,14 +26,20 @@ import { FlexModule } from '@angular/flex-layout';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { AdminRootComponent } from './components/admin-root/admin-root.component';
 import { CoursesComponent } from './components/courses/courses.component';
-import { CourseDetailsComponent } from './components/course-details/course-details.component';
+import { CourseDetailsComponent } from './components/course-details-&-edit/course-details.component';
 import { ExamComponent } from './components/exam/exam.component';
-import { ExamDetailsComponent } from './components/exam-details/exam-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseAddModalComponent } from './modals/course-add-modal/course-add-modal.component';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ExamAddModalComponent } from './components/exam-add-modal/exam-add-modal.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CreateExamComponent } from './components/create-exam/create-exam.component';
+import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalCourseComponent } from './modals/confirmation-modal-course/confirmation-modal.component';
+import { UserDeleteConfirmationModalComponent } from './modals/user-delete-confirmation-modal/user-delete-confirmation-modal.component';
 const materials = [
     MatAutocompleteModule,
     MatButtonModule,
@@ -55,9 +61,12 @@ const materials = [
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatSortModule,
     MatPaginatorModule,
     MatDividerModule,
+    MatGridListModule,
+    MatDatepickerModule,
 ];
 
 @NgModule({
@@ -67,8 +76,12 @@ const materials = [
         CoursesComponent,
         CourseDetailsComponent,
         ExamComponent,
-        ExamDetailsComponent,
         CourseAddModalComponent,
+        ConfirmationModalComponent,
+        ExamAddModalComponent,
+        CreateExamComponent,
+        ConfirmationModalCourseComponent,
+        UserDeleteConfirmationModalComponent,
     ],
     imports: [CommonModule, AdminRoutingModule, FlexModule, ...materials, HttpClientModule],
     entryComponents: [CourseAddModalComponent],

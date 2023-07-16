@@ -2,7 +2,11 @@ const Examination = require("../models/examModel");
 
 async function getExams(req, res) {
     try {
-        const exams = await Examination.find(req.query);
+        let regexExp = {};
+        if (req.query?.examName) {
+            Object.assign(regexExp, { examName: new RegExp("^" + req.query.examName.toLowerCase(), "i") });
+        }
+        const exams = await Examination.find(regexExp);
         if (exams) {
             res.status(200).json({ success: true, examList: exams });
         } else {
@@ -77,9 +81,24 @@ async function updateSelectedExam(req, res) {
     }
 }
 
+async function deleteExamById(req, res) {
+    try {
+        await Examination.findByIdAndRemove(req.params.id)
+            .then((response) => {
+                res.status(202).json({ success: true, exam: response });
+            })
+            .catch((err) => {
+                res.status(404).json({ success: false, message: "exam not deleted." });
+            });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error });
+    }
+}
+
 module.exports = {
     getExams,
     getExamById,
     createNewExam,
     updateSelectedExam,
+    deleteExamById,
 };

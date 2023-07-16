@@ -1,1 +1,86 @@
-<p>exam works!</p>
+<div class="p-20 bg-main-color">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <div *ngIf="!loading" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="bg-color-white border-radius-4 p-12">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <mat-icon color="primary">hub</mat-icon>
+                <span class="headline-5">Examination List ({{ examList.length }})</span>
+            </div>
+            <form [formGroup]="search" class="search-form" fxLayoutAlign="center center">
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="Name" placeholder="Search..." />
+                    <mat-icon class="mb-6" matPrefix color="primary">search</mat-icon>
+                    <mat-icon
+                        *ngIf="search.get('Name')?.value"
+                        class="mb-6 cursor-pointer"
+                        (click)="search.get('Name')?.setValue('')"
+                        matSuffix
+                        color="warn"
+                        >clear</mat-icon
+                    >
+                </mat-form-field>
+            </form>
+            <button mat-raised-button color="primary" class="button-text" (click)="addExam()">Add Examination</button>
+        </div>
+        <div fxLayout="column" fLayoutAlign="start stretch" class="bg-color-white p-12 border-radius-4">
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="pl-24 pr-24 pt-12 pb-12">
+                    <span fxFlex="40" class="subtitle-1">Name</span>
+                    <span fxFlex="10" class="subtitle-1">Start Date</span>
+                    <span fxFlex="15" class="subtitle-1 text-truncate" matTooltip="Registration Start Date"
+                        >Registration Open Date</span
+                    >
+                    <span fxFlex="15" class="subtitle-1 text-truncate" matTooltip="Registration Close Date"
+                        >Registration Close Date</span
+                    >
+                    <span fxFlex="8" class="subtitle-1">Status</span>
+                    <span fxFlex="2" class="subtitle-1"></span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="p-12 height-scroll">
+                    <ng-container *ngFor="let exam of examList">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="p-12 row cursor-pointer">
+                            <span fxFlex="40" class="subtitle-2 text-truncate" matTooltip="{{ exam.examName }}">{{
+                                exam.examName
+                            }}</span>
+                            <span fxFlex="10" class="subtitle-2"> {{ exam.examDate | date : "mediumDate" }} </span>
+                            <span fxFlex="15" class="subtitle-2"> {{ exam.registrationOpenDate | date : "mediumDate" }} </span>
+                            <span fxFlex="15" class="subtitle-2">{{ exam.registrationCloseDate | date : "mediumDate" }}</span>
+                            <span fxFlex="8" class="subtitle-2"> {{ exam.status }} </span>
+                            <mat-icon
+                                class="action"
+                                *ngIf="!exam.isExpanded"
+                                fxFlex="2"
+                                color="primary"
+                                (click)="toggleRowExpansion(exam._id)"
+                                >expand_more</mat-icon
+                            >
+                            <mat-icon
+                                class="action"
+                                *ngIf="exam.isExpanded"
+                                fxFlex="2"
+                                color="primary"
+                                (click)="toggleRowExpansion(exam._id)"
+                                >expand_less</mat-icon
+                            >
+                        </div>
+                        <ng-container *ngIf="exam.isExpanded">
+                            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" class="p-12 mat-elevation-z1">
+                                <button mat-raised-button color="primary" class="button-text" (click)="seeDetails(exam._id)">
+                                    See Details
+                                </button>
+                                <button mat-raised-button color="accent" class="button-text" (click)="editExam(exam._id)">
+                                    Edit
+                                </button>
+                                <button mat-raised-button color="warn" class="button-text" (click)="deleteExam(exam._id)">
+                                    Delete
+                                </button>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+    </div>
+</div>

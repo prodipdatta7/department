@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -15,13 +15,23 @@ export class AdminSpecificService {
     };
     constructor(private http: HttpClient) {}
 
-    getCourses(): Observable<any> {
-        return this.http.get<any>(`${this.url}/getCourses`);
+    getCourses(query?: any): Observable<any> {
+        let queries = new HttpParams();
+        if (query) {
+            queries = queries.append('courseName', query.courseName);
+        }
+        return this.http.get<any>(`${this.url}/getCourses`, { observe: 'response', params: queries });
+    }
+    getCourseById(id: any): Observable<any> {
+        return this.http.get<any>(`${this.url}/getCourseById/${id}`);
     }
     updateCourse(Id: string, payload: any): Observable<any> {
         return this.http.put<any>(`${this.url}/updateCourse/${Id}`, payload);
     }
     addCourse(payload: any): Observable<any> {
         return this.http.post<any>(`${this.url}/addCourse`, payload);
+    }
+    deleteCourse(id: any): Observable<any> {
+        return this.http.delete<any>(`${this.url}/deleteCourse/${id}`);
     }
 }
