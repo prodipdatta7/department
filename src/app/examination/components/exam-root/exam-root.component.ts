@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ExamService } from '../../services/exam.service';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ExamService} from '../../services/exam.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-exam-root',
@@ -13,25 +13,27 @@ export class ExamRootComponent implements OnInit {
 
     constructor(private examService: ExamService, private router: Router, private route: ActivatedRoute) {}
 
+    static isRegistrationOpened(startDate: Date, endDate: Date) {
+        if (!startDate || !endDate) return false;
+        const curDate = new Date();
+        return new Date(curDate).getTime() >= new Date(startDate).getTime() && new Date(curDate).getTime() < new Date(endDate).getTime();
+    }
+
     ngOnInit(): void {
         this.examService.getUpcommingExaminations().subscribe((response: any) => {
             if (response?.body?.success) {
                 this.upcommingExams = response.body.examList.filter((exam: any) => exam.status === 'upcomming');
                 this.pastExams = response.body.examList.filter((exam: any) => exam.status === 'past');
+                this.getRegistrationStatus();
             }
         });
     }
 
     getRegistrationStatus() {
         for (const element of this.upcommingExams) {
-            element.isRegistrationOpened = this.isRegistrationOpened(element.registrationOpenDate, element.registrationCloseDate);
+            element.isRegistrationOpened = ExamRootComponent.isRegistrationOpened(element.registrationOpenDate, element.registrationCloseDate);
+            console.log(element.isRegistrationOpened)
         }
-    }
-
-    isRegistrationOpened(startDate: Date, endDate: Date) {
-        if (!startDate || !endDate) return false;
-        const curDate = new Date();
-        return curDate.getTime() >= startDate.getTime() && curDate.getTime() < endDate.getTime();
     }
     seeDetails(exam: any) {
         console.log(exam);

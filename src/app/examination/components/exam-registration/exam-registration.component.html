@@ -199,14 +199,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-12" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="p-12 mt-16" fxLayout="row" fxLayoutAlign="space-between center">
                     <div>
                         <span class="subtitle-1 color-custom">[To be filled by Exam controller office]</span>
                     </div>
                     <div fxLayout="column" fxLayoutALign="start center">
                         <hr class="w-200 border" />
                         <div class="m-0 text-align-center">
-                            <span>examinee's signature & date</span>
+                            <span class="subtitle-2">examinee's signature & date</span>
                         </div>
                     </div>
                 </div>
@@ -220,12 +220,36 @@
                             <span class="p-4">To be used by bank</span>
                         </div>
                         <div class="border-table" fxLayout="row" fxLayoutAlign="start start">
-                            <div class="border-table p-4">Scroll No.</div>
-                            <div class="border-table p-4">signature, seal and date of money receipt</div>
+                            <div class="border-right-1 p-4 w-80">Scroll No.</div>
+                            <div class="p-4 w-280">signature, seal and date of money receipt</div>
+                        </div>
+                        <div class="border-table" fxLayout="row" fxLayoutAlign="start start">
+                            <div class="border-right-1 p-4 w-80 h-100"></div>
+                            <div class="p-4 w-280 h-100"></div>
+                        </div>
+                    </div>
+                    <div class="ml-auto h-170 pt-20" fxFlex="50" fxLayout="column" fxLayoutAlign="start start">
+                        <div fxFlex="100" fxLayout="row" fxLayoutAlign="center start">
+                            <span class="subtitle-2">Exam centre : </span>
+                            <hr class="w-400 border mt-16 ml-8"/>
+                        </div>
+                        <div fxFlex="100" fxLayout="column" fxLayoutAlign="end center">
+                            <div>
+                                <hr class="w-400 border mt-16 ml-8"/>
+                            </div>
+                            <span class="subtitle-2">Exam Controller</span>
+                            <span class="subtitle-2"
+                            >Bangabandhu Sheikh Mujibur Rahman Science and Technology University, Gopalganj</span
+                            >
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="bg-color-white p-12 border-radius-8" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px"
+             style="position: relative;">
+            <button (click)="back()" class="button-text" color="warn" mat-stroked-button>Cancel</button>
+            <button (click)="register()" class="button-text" color="primary" mat-raised-button>Submit</button>
         </div>
     </div>
 </div>

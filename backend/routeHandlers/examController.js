@@ -1,4 +1,6 @@
 const Examination = require("../models/examModel");
+const {createPdf} = require('../middlewares/createPdf');
+const {getUserById} = require('./userController');
 
 async function getExams(req, res) {
     try {
@@ -22,7 +24,7 @@ async function getExams(req, res) {
 
 async function getExamById(req, res) {
     try {
-        const selectedExam = await Examination.findById(req.params.id).populate("courses");
+        const selectedExam = await Examination.findById(req.params.id).populate("courses").populate("registeredStudents");
         if (selectedExam) {
             res.status(200).json({ success: true, exam: selectedExam });
         } else {
@@ -95,10 +97,49 @@ async function deleteExamById(req, res) {
     }
 }
 
+async function getPdfFiles(req, res) {
+    try {
+        const filePath = createPdf(req.body);
+        res.status(200).json({
+            success: true,
+            file: filePath
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error,
+        });
+    }
+}
+
+async function registerStudent(req, res) {
+    try {
+        const exam = await Examination.findByIdAndUpdate(req.params.id, req.payload, {new: true});
+        if (!exam) {
+            res.status(404).json({
+                success: false,
+                message: "There are some issues in updating. ID might be incorrect.",
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                exam: exam,
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error,
+        });
+    }
+}
+
 module.exports = {
     getExams,
     getExamById,
     createNewExam,
     updateSelectedExam,
     deleteExamById,
+    registerStudent,
+    getPdfFiles
 };

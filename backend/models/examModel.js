@@ -40,6 +40,12 @@ const examModel = mongoose.Schema(
                 ref: "Course",
             },
         ],
+        registeredStudents: [
+            {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: "Student"
+            }
+        ]
     },
     { timestamps: true }
 );

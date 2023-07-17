@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonService } from 'src/app/services/common.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { UserService } from 'src/app/services/user.service';
-import { ExamService } from '../../services/exam.service';
-import { forkJoin } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CommonService} from 'src/app/services/common.service';
+import {LocalStorageService} from 'src/app/services/local-storage.service';
+import {UserService} from 'src/app/services/user.service';
+import {ExamService} from '../../services/exam.service';
+import {forkJoin} from 'rxjs';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-exam-registration',
@@ -21,7 +22,8 @@ export class ExamRegistrationComponent implements OnInit {
         private userService: UserService,
         private commonService: CommonService,
         private storageServivce: LocalStorageService,
-        private examService: ExamService
+        private examService: ExamService,
+        private location: Location
     ) {}
     ngOnInit(): void {
         this.dataLoaded = false;
@@ -47,5 +49,13 @@ export class ExamRegistrationComponent implements OnInit {
             this.commonService.openSnackbar('Authentication failed! Login please.');
             this.router.navigate(['login']);
         }
+    }
+
+    back() {
+        this.location.back();
+    }
+
+    register() {
+
     }
 }

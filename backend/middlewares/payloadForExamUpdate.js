@@ -9,6 +9,7 @@ function payloadForExamUpdate(req, res, next) {
         examCentre: req.body.examCentre,
         status: req.body.status,
         courses: req.body.courses,
+        registeredStudents: req.body.registeredStudents,
     };
     req["payload"] = payload;
     next();
