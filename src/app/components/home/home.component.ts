@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
 
     getExams() {
         this.dataLoaded = false;
-        this.examService.getUpcommingExaminations('upcomming').subscribe((res: any) => {
+        this.examService.getUpcommingExaminations(null, 'upcomming').subscribe((res: any) => {
             if (res?.body?.success) {
                 this.upCommingExams = res.body.examList || [];
             }

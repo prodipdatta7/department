@@ -8,6 +8,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { UserService } from 'src/app/services/user.service';
 import { ImageViewerComponent } from 'src/app/shared/components/image-viewer/image-viewer.component';
 import { environment } from 'src/environments/environment';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-settings',
@@ -26,17 +27,20 @@ export class SettingsComponent implements OnInit {
     filteredCourses!: Observable<any[]> | undefined;
     updating = false;
     CLASSES = environment.CLASSES;
+    isAdmin = false ;
     constructor(
         private route: ActivatedRoute,
         private userService: UserService,
         private router: Router,
         private fb: FormBuilder,
         private dialog: MatDialog,
-        private commonService: CommonService
+        private commonService: CommonService,
+        private location: Location
     ) {}
     ngOnInit(): void {
         this.loading = true;
         const id = this.route.snapshot?.params['id'];
+        this.isAdmin = this.route.snapshot.queryParamMap.get('user') === 'admin' ;
         this.getCourses();
         this.userService.getUserById(id).subscribe((res: any) => {
             if (res?.data) {
@@ -274,7 +278,7 @@ export class SettingsComponent implements OnInit {
         let payload: any = {
             name: this.Name.value,
             fatherName: this.FatherName.value,
-            motherName: this.FatherName.value,
+            motherName: this.MotherName.value,
             guardianName: this.GuardianName.value,
             address: this.PresentAddress.value,
             phone: this.Phone.value,
@@ -311,7 +315,8 @@ export class SettingsComponent implements OnInit {
         });
     }
     backToProfile() {
-        const id = this.route.snapshot.paramMap.get('id');
-        this.router.navigate([`profile/${id}`]);
+        // const id = this.route.snapshot.paramMap.get('id');
+        // this.router.navigate([`profile/${id}`]);
+        this.location.back();
     }
 }

@@ -8,6 +8,28 @@ import { CommonService } from './common.service';
     providedIn: 'root',
 })
 export class UserService {
+    requiredField = [
+        'name',
+        'fatherName',
+        'motherName',
+        'guardianName',
+        'studentId',
+        'phone',
+        'department',
+        'semester',
+        'session',
+        'imagePath',
+        'address',
+        'village',
+        'postOffice',
+        'subDistrict',
+        'district',
+        'nationality',
+        'religion',
+        'birthDate',
+        'academicInfo',
+        'courses'
+    ];
     apiUrl = 'http://localhost:3000/users';
     httpOptions = {
         headers: new HttpHeaders({
@@ -26,6 +48,21 @@ export class UserService {
             }
         }
         return false;
+    }
+
+    checkIfAllRequiredFieldExist(document: any): boolean {
+        let keys = Object.keys(document) ;
+        let validity = true ;
+        debugger
+        this.requiredField.forEach((key: string) => {
+            if(keys.indexOf(key) === -1) {
+                validity = false ;
+            }
+            if(!document[key]) {
+                validity = false ;
+            }
+        });
+        return validity ;
     }
 
     Register(payload: any): Observable<any> {
@@ -96,10 +133,14 @@ export class UserService {
     getUserByEmail(email: string): Observable<any> {
         let params = new HttpParams();
         if (email) params = params.append('email', email);
-        return this.http.get<any>(`${this.apiUrl}/getByEmail`, { observe: 'response', params: { email: email } });
+        return this.http.get<any>(`${this.apiUrl}/getByEmail`, { observe: 'response', params });
     }
 
     deleteUserById(Id: any): Observable<any> {
         return this.http.delete<any>(`${this.apiUrl}/remove/${Id}`);
+    }
+
+    registerInExam(payload: any, userId: string): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/exam-registration/${userId}`, payload);
     }
 }

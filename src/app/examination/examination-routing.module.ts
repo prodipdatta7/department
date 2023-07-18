@@ -4,6 +4,7 @@ import { ExamRootComponent } from './components/exam-root/exam-root.component';
 import { ExamDetailsComponent } from './components/exam-details/exam-details.component';
 import { ExamRegistrationComponent } from './components/exam-registration/exam-registration.component';
 import { ExamPaymentsComponent } from './components/exam-payments/exam-payments.component';
+import {ExamRegistrationSuccessComponent} from "./components/exam-registration-success/exam-registration-success.component";
 
 const routes: Routes = [
     {
@@ -22,6 +23,10 @@ const routes: Routes = [
         path: 'details/:id/payments',
         component: ExamPaymentsComponent,
     },
+    {
+        path: 'details/:id/registration/successful',
+        component: ExamRegistrationSuccessComponent
+    }
 ];
 
 @NgModule({

@@ -10,7 +10,7 @@ function createPdf(document) {
         font: 'Times-Roman',
         width: 600
     });
-    const parentUrl = path.resolve(__dirname, '..');
+    const parentUrl = path.resolve(__dirname, '../..');
     // const iconPath = path.join(parentUrl, 'local-images/bsmrstu_logo.jpeg');
     // doc.image(iconPath, 20, 20, {
     //   height: 24,
@@ -175,7 +175,7 @@ function createPdf(document) {
 
     console.log('path', parentUrl);
     const userName = document.name.split(' ').join('-');
-    const pdfPath = path.join(parentUrl, `pdf-files/${userName}-info-${new Date().getTime()}.pdf`);
+    const pdfPath = path.join(parentUrl, `src/assets/pdf/${userName}-info-${new Date().getTime()}.pdf`);
     console.log('pdfPath', pdfPath);
     doc.pipe(fs.createWriteStream(pdfPath));
     doc.end();

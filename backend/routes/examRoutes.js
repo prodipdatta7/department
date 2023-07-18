@@ -10,6 +10,7 @@ router.post("/createExam", payloadForExamUpdate, createNewExam);
 router.put("/updateExam/:id", payloadForExamUpdate, updateSelectedExam);
 router.delete("/remove/:id", deleteExamById);
 router.put('/register/:id', payloadForExamUpdate, registerStudent);
-router.get('/getDocuments', getPdfFiles);
+router.post('/getDocuments', getPdfFiles);
+
 
 module.exports = router;

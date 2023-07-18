@@ -1,12 +1,14 @@
 const Examination = require("../models/examModel");
+const UserExamMapping = require('../models/userExamMappingModel');
 const {createPdf} = require('../middlewares/createPdf');
-const {getUserById} = require('./userController');
-
 async function getExams(req, res) {
     try {
         let regexExp = {};
         if (req.query?.examName) {
             Object.assign(regexExp, { examName: new RegExp("^" + req.query.examName.toLowerCase(), "i") });
+        }
+        if (req.query?.status) {
+            Object.assign(regexExp, { status: new RegExp("^" + req.query.status.toLowerCase(), "i") });
         }
         const exams = await Examination.find(regexExp);
         if (exams) {
@@ -100,6 +102,13 @@ async function deleteExamById(req, res) {
 async function getPdfFiles(req, res) {
     try {
         const filePath = createPdf(req.body);
+        const body = {
+            user: req.body.userId,
+            exam: req.body.examId,
+            filePath: filePath
+        };
+        const instance = new UserExamMapping(body);
+        await instance.save();
         res.status(200).json({
             success: true,
             file: filePath

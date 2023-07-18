@@ -70,6 +70,11 @@ export class ExamComponent implements OnInit {
                 title: 'Examination Delete Modal',
             },
         });
+        dialogRef.afterClosed().subscribe((res : any) => {
+            if(res === 'deleted') {
+                this.getExams();
+            }
+        })
     }
     toggleRowExpansion(id: any) {
         this.examList.forEach((exam) => {

@@ -23,10 +23,12 @@ mongoose
 const userRoutes = require("./routes/users");
 const courseRoutes = require("./routes/courseRoutes");
 const examRoutes = require("./routes/examRoutes");
+const userExamMappingRoutes = require('./routes/userExamMappingRoutes');
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(express.static(path.join(__dirname, "pdf-files")));
 app.use((req, res, next) => {
     console.log("common:", req.body);
     console.log("url", req.url);
@@ -39,6 +41,7 @@ app.use((req, res, next) => {
 app.use("/users", userRoutes);
 app.use("/courses", courseRoutes);
 app.use("/examinations", examRoutes);
+app.use("/user-exam-mapping", userExamMappingRoutes);
 
 const port = process.env.PORT;
 

@@ -7,6 +7,7 @@ const {
     login,
     deleteUser,
     getUserByEmail,
+    updateRegisteredExams
 } = require("../routeHandlers/userController");
 const createPayload = require("../middlewares/createPayload");
 
@@ -45,5 +46,6 @@ router.put("/update/:id", multer({ storage: storage }).single("image"), createPa
 router.post("/login", login);
 router.delete("/remove/:id", deleteUser);
 router.get("/getByEmail", getUserByEmail);
+router.put('/exam-registration/:id', createPayload, updateRegisteredExams)
 
 module.exports = router;

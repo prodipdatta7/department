@@ -16,7 +16,6 @@ function createPayload(req, res, next) {
         semester: req.body.semester,
         session: req.body.session,
         isAdmin: req.body.isAdmin,
-        imagePath: imagePath,
         fatherName: req.body.fatherName,
         motherName: req.body.motherName,
         guardianName: req.body.guardianName,
@@ -30,7 +29,9 @@ function createPayload(req, res, next) {
         birthDate: req.body.birthDate,
         academicInfo: req.body.academicInfo,
         courses: req.body.courses,
+        participatedExams: req.body.participatedExams
     };
+    if(imagePath)Object.assign(payload, {imagePath: imagePath});
     console.table(payload);
     req["payload"] = payload;
     next();

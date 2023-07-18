@@ -14,6 +14,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from '../shared/shared.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AppRegistrationConfirmModalComponent } from './components/app-registration-confirm-modal/app-registration-confirm-modal.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ExamRegistrationSuccessComponent } from './components/exam-registration-success/exam-registration-success.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +25,7 @@ import { AppRegistrationConfirmModalComponent } from './components/app-registrat
         ExamRegistrationComponent,
         ExamPaymentsComponent,
         AppRegistrationConfirmModalComponent,
+        ExamRegistrationSuccessComponent,
     ],
     imports: [
         CommonModule,
@@ -33,6 +37,8 @@ import { AppRegistrationConfirmModalComponent } from './components/app-registrat
         MatDividerModule,
         SharedModule,
         MatProgressBarModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule
     ],
     entryComponents: [AppRegistrationConfirmModalComponent],
 })

@@ -1,0 +1,25 @@
+<div class="p-20 bg-main-color" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20">
+    <div class="p-12 bg-color-white border-radius-8" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <span class="headline-5" style="color: #4dd122">Congratulations! Registration Successful!</span>
+        <span class="subtitle-2">You have successfully registered for the exam</span>
+    </div>
+    <div *ngIf="!dataLoaded" class="p-12 bg-color-white border-radius-8" fxLayout="column" fxLayoutAlign="start stretch"
+         fxLayoutGap="20px">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <span class="subtitle-1">Background process is running... It may take some time. Please wait until the PDF is generated.</span>
+        </div>
+    </div>
+    <ng-container *ngIf="dataLoaded">
+        <div class="p-12 bg-color-white border-radius-8" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20">
+            <span class="headline-6 p-12">Documents</span>
+            <mat-card class="p-20">
+                <span class="subtitle-2 mb-8">Open your registration form's pdf from the below link</span>
+                <button (click)="openPdf()" color="primary" mat-raised-button>registration form pdf file</button>
+            </mat-card>
+        </div>
+        <div class="bg-color-white p-12 border-radius-8" fxLayout="row" fxLayoutAlign="end center">
+            <button (click)="homePage()" class="button-text" color="primary" mat-raised-button>Done</button>
+        </div>
+    </ng-container>
+</div>

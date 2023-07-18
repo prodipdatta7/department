@@ -1,4 +1,3 @@
-const { Double } = require("mongodb");
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
@@ -74,6 +73,12 @@ const userSchema = mongoose.Schema(
                 ref: "Course",
             },
         ],
+        participatedExams: [
+            {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: "Examination"
+            }
+        ]
     },
     {
         timestamps: true,

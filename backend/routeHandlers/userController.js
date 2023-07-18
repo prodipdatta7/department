@@ -137,6 +137,22 @@ async function updateUser(req, res) {
     }
 }
 
+async function updateRegisteredExams(req, res) {
+    try {
+        const user = await Student.findByIdAndUpdate(req.params.id, req.payload, {new: true});
+        if (!user) {
+            res.status(404).json({
+                success: false,
+                message: "Update failed. ID might be incorrect",
+            });
+        } else {
+            res.status(200).json({ success: true, data: user });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, error: error });
+    }
+}
+
 async function login(req, res) {
     console.log(req.body);
     try {
@@ -217,4 +233,5 @@ module.exports = {
     login,
     deleteUser,
     getUserByEmail,
+    updateRegisteredExams
 };
