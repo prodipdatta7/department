@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AdminSpecificService } from '../../services/admin-specific.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CourseAddModalComponent } from '../../modals/course-add-modal/course-add-modal.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationModalCourseComponent } from '../../modals/confirmation-modal-course/confirmation-modal.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AdminSpecificService} from '../../services/admin-specific.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CourseAddModalComponent} from '../../modals/course-add-modal/course-add-modal.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfirmationModalCourseComponent} from '../../modals/course-delete-confirmation-modal/confirmation-modal.component';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {debounceTime, distinctUntilChanged, startWith} from 'rxjs';
 
 export interface ICourseModel {
     courseId: string;

@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
-import { UserDeleteConfirmationModalComponent } from '../../modals/user-delete-confirmation-modal/user-delete-confirmation-modal.component';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import {ActivatedRoute, Router} from '@angular/router';
+import {debounceTime, distinctUntilChanged, Subscription} from 'rxjs';
+import {UserService} from 'src/app/services/user.service';
+import {UserDeleteConfirmationModalComponent} from '../../modals/user-delete-confirmation-modal/user-delete-confirmation-modal.component';
+import {CreateUserModalComponent} from "../../modals/create-user-modal/create-user-modal.component";
 
 @Component({
     selector: 'app-users',
@@ -63,7 +64,15 @@ export class UsersComponent implements OnInit, OnDestroy {
             element.unsubscribe();
         }
     }
-    createUser() {}
+
+    createUser() {
+        const ref = this.dialog.open(CreateUserModalComponent);
+        ref.afterClosed().subscribe((response: any) => {
+            if (response === 'success') {
+                this.getUserList();
+            }
+        })
+    }
     seeDetails(id: any) {
         this.router.navigate([`profile/${id}`], {
             queryParams: {

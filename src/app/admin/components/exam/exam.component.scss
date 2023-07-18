@@ -11,9 +11,7 @@
 }
 
 .action {
-    background: rgb(148, 145, 0, 70%);
-    border-radius: 50%;
-    color: #fff;
+    color: rgb(148, 145, 0, 70%);
 }
 :host ::ng-deep .search-form {
     .mat-mdc-text-field-wrapper {

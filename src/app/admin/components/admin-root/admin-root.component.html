@@ -6,15 +6,18 @@
             </div>
             <mat-divider></mat-divider>
             <div fxLayout="column" fxlayoutAlign="start center" fxFlex="100" class="mt-8">
-                <div class="admin-menu" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <div [ngClass]="{'active-tab' : activeTab === 'users'}" class="admin-menu" fxLayout="row"
+                     fxLayoutAlign="start center" fxLayoutGap="12px">
                     <mat-icon color="primary">layers</mat-icon>
                     <a routerLink="users" class="subtitle-2">Users</a>
                 </div>
-                <div class="admin-menu" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <div [ngClass]="{'active-tab' : activeTab === 'courses'}" class="admin-menu" fxLayout="row"
+                     fxLayoutAlign="start center" fxLayoutGap="12px">
                     <mat-icon color="primary">layers</mat-icon>
                     <a routerLink="courses" class="subtitle-2">Courses</a>
                 </div>
-                <div class="admin-menu" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+                <div [ngClass]="{'active-tab' : activeTab === 'examinations'}" class="admin-menu" fxLayout="row"
+                     fxLayoutAlign="start center" fxLayoutGap="12px">
                     <mat-icon color="primary">layers</mat-icon>
                     <a routerLink="examinations" class="subtitle-2">Examination</a>
                 </div>

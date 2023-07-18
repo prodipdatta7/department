@@ -35,7 +35,8 @@
                 <mat-divider></mat-divider>
                 <div class="p-12 height-scroll">
                     <ng-container *ngFor="let course of courses">
-                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="p-12 row cursor-pointer">
+                        <div (click)="toggleRowExpansion(course._id)" class="p-12 row cursor-pointer" fxLayout="row"
+                             fxLayoutAlign="start center" fxLayoutGap="20px">
                             <span fxFlex="20" class="subtitle-2 text-truncate" matTooltip="{{ course.courseCode }}">{{
                                 course.courseCode
                             }}</span>
@@ -46,7 +47,6 @@
                                 *ngIf="!course.isExpanded"
                                 fxFlex="2"
                                 color="primary"
-                                (click)="toggleRowExpansion(course._id)"
                                 >expand_more</mat-icon
                             >
                             <mat-icon
@@ -54,7 +54,6 @@
                                 *ngIf="course.isExpanded"
                                 fxFlex="2"
                                 color="primary"
-                                (click)="toggleRowExpansion(course._id)"
                                 >expand_less</mat-icon
                             >
                         </div>

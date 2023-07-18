@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { ExamService } from 'src/app/examination/services/exam.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationModalComponent } from '../../modals/confirmation-modal/confirmation-modal.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { startWith, debounceTime, distinctUntilChanged } from 'rxjs';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {ExamService} from 'src/app/examination/services/exam.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfirmationModalComponent} from '../../modals/exam-delete-confirmation-modal/confirmation-modal.component';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {debounceTime, distinctUntilChanged, startWith} from 'rxjs';
 
 @Component({
     selector: 'app-exam',

@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ExamService } from 'src/app/examination/services/exam.service';
-import { CommonService } from 'src/app/services/common.service';
-import { AdminSpecificService } from '../../services/admin-specific.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {CommonService} from 'src/app/services/common.service';
+import {AdminSpecificService} from '../../services/admin-specific.service';
 
 @Component({
     selector: 'app-confirmation-modal',

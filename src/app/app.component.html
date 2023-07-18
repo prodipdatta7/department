@@ -5,16 +5,20 @@
                 <span class="headline-6">Department Registration</span>
                 <div class="topmenu">
                     <ng-container *ngFor="let link of navigations; let lastIndex = last">
-                        <button *ngIf="link.title !== 'Profile'" mat-button routerLink="{{ link.url }}">
+                        <button *ngIf="link.title !== 'Profile'" [ngClass]="{'activeTab' : activeTab === link.url}"
+                                mat-button routerLink="{{ link.url }}">
                             {{ link.title }}
                         </button>
-                        <button *ngIf="link.title === 'Profile'" mat-button (click)="visitProfile()">
+                        <button (click)="visitProfile()" *ngIf="link.title === 'Profile'"
+                                [ngClass]="{'activeTab' : activeTab === link.url}" mat-button>
                             {{ link.title }}
                         </button>
-                        <span *ngIf="!lastIndex" class="h-24">|</span>
+                        <span *ngIf="!lastIndex" class="h-24 mx-8">|</span>
                     </ng-container>
-                    <span *ngIf="profileData?.isAdmin" class="h-24">|</span>
-                    <button *ngIf="profileData?.isAdmin" mat-button routerLink="admin">Dashboard</button>
+                    <span *ngIf="profileData?.isAdmin" class="h-24 mx-8">|</span>
+                    <button *ngIf="profileData?.isAdmin" [ngClass]="{'activeTab' : activeTab === 'admin'}" mat-button
+                            routerLink="admin">Dashboard
+                    </button>
                 </div>
             </div>
             <div class="profile-trigger">

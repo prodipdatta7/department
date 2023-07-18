@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
-import { Subscription, filter } from 'rxjs';
-import { CommonService } from './services/common.service';
-import { Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {UserService} from './services/user.service';
+import {filter, Subscription} from 'rxjs';
+import {CommonService} from './services/common.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -15,7 +15,20 @@ export class AppComponent implements OnInit, OnDestroy {
     profileData: any;
     subscriptions: Subscription[] = [];
     navigations = CommonService.navigations;
-    constructor(private userService: UserService, private commonService: CommonService, private router: Router) {}
+    activeTab = 'home';
+
+    constructor(private userService: UserService, private commonService: CommonService, private router: Router) {
+        router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                if (event.url) {
+                    const paths = event.url.split('/');
+                    if (paths.length >= 2) {
+                        this.activeTab = paths[1];
+                    }
+                }
+            }
+        })
+    }
     ngOnInit(): void {
         if (this.userService.isStillAuthentic()) {
             const data = this.userService.getUserData() || {};
