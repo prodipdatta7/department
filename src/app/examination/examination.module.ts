@@ -17,6 +17,7 @@ import { AppRegistrationConfirmModalComponent } from './components/app-registrat
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ExamRegistrationSuccessComponent } from './components/exam-registration-success/exam-registration-success.component';
+import { ExamPaymentFailedComponent } from './components/exam-payment-failed/exam-payment-failed.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { ExamRegistrationSuccessComponent } from './components/exam-registration
         ExamPaymentsComponent,
         AppRegistrationConfirmModalComponent,
         ExamRegistrationSuccessComponent,
+        ExamPaymentFailedComponent,
     ],
     imports: [
         CommonModule,

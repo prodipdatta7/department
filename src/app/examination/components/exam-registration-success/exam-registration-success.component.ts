@@ -15,6 +15,9 @@ import {CommonService} from "../../../services/common.service";
 export class ExamRegistrationSuccessComponent implements OnInit {
     dataLoaded = false;
     filePath: any;
+    submitted = false;
+    userData: any;
+    examData: any;
 
     constructor(
         private userService: UserService,
@@ -30,13 +33,35 @@ export class ExamRegistrationSuccessComponent implements OnInit {
         this.dataLoaded = false;
         const examId = this.route.snapshot.paramMap.get('id');
         const userId = this.route.snapshot.queryParamMap.get('userId');
-        this.prepareDataForPdf(examId, userId);
+        const exam_id = this.route.snapshot.paramMap.get('id');
+        if (!this.userService.isStillAuthentic()) {
+            this.commonService.openSnackbar('Authentication failed! Login please.');
+            this.router.navigate(['login']);
+        }
+        const user = this.storageService.getLoggedInUserData();
+        if (user) {
+            const id = JSON.parse(user)?._id;
+            let subscriptions = [this.userService.getUserById(id), this.examService.getExamById(exam_id)];
+            forkJoin(subscriptions).subscribe((data: any[]) => {
+                if (data.every((f) => f.success === true)) {
+                    this.userData = data?.[0]?.data;
+                    this.examData = data?.[1]?.exam;
+                } else {
+                    this.commonService.openSnackbar('Something went wrong! Please try again.');
+                }
+                this.dataLoaded = true;
+            });
+            this.prepareDataForPdf(examId, userId);
+        } else {
+            this.commonService.openSnackbar('Authentication failed! Login please.');
+            this.router.navigate(['login']);
+        }
+
     }
 
     openPdf() {
         const paths = this.filePath.split('\\');
         const fileName = paths[paths?.length - 1];
-        debugger
         const url = `assets/pdf/${fileName}`;
         window.open(url, '_blank');
     }
@@ -45,7 +70,7 @@ export class ExamRegistrationSuccessComponent implements OnInit {
         this.router.navigate(['home']);
     }
 
-    private prepareDataForPdf(examId: string | null, userId: string | null) {
+    prepareDataForPdf(examId: string | null, userId: string | null) {
         const subscriptions = [this.examService.getExamById(examId), this.userService.getUserById(userId)];
         forkJoin(subscriptions).pipe(
             map(([exam, user]) => {
@@ -83,6 +108,38 @@ export class ExamRegistrationSuccessComponent implements OnInit {
                 this.dataLoaded = true;
                 this.commonService.openSnackbar('Something Went wrong! User of exam data not loaded. Try again later...');
             }
+        })
+    }
+
+    register() {
+        this.submitted = true;
+        const examPayload = {
+            registeredStudents: [...this.examData.registeredStudents, this.userData._id]
+        };
+        const userPayload = {
+            participatedExams: [...this.userData.participatedExams, this.examData._id]
+        };
+        const subscriptions = [this.examService.registerUser(examPayload, this.examData._id), this.userService.registerInExam(userPayload, this.userData._id)];
+        forkJoin(subscriptions).pipe(map(([exam, user]) => {
+            const response = {
+                success: exam.success && user.success
+            };
+            Object.assign(response, {examData: exam.exam});
+            Object.assign(response, {userData: user.data});
+            return response;
+        })).subscribe((response: any) => {
+            if (response?.success) {
+                this.router.navigate(['./successful'], {
+                    relativeTo: this.route,
+                    queryParams: {
+                        userId: this.userData._id
+                    },
+                    queryParamsHandling: 'merge'
+                }).then();
+            } else {
+                this.commonService.openSnackbar('Something went wrong! Try again after some time...');
+            }
+            this.submitted = false;
         })
     }
 }

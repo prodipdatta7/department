@@ -8,9 +8,13 @@
         <div class="p-24 bg-color-white border-radius-4 courseHeight">
             <form [formGroup]="examForm">
                 <div fxLayout="row wrap">
-                    <mat-form-field appearance="outline" fxFlex="60" class="p-4">
+                    <mat-form-field appearance="outline" fxFlex="40" class="p-4">
                         <mat-label>Exam Name</mat-label>
                         <input matInput type="text" formControlName="examName" class="subtitle-2" required />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="p-4">
+                        <mat-label>Exam Fees</mat-label>
+                        <input matInput type="number" formControlName="examFees" class="subtitle-2" required />
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="p-4" (click)="openDatePicker.open()">
                         <mat-label>Regi. Open Date</mat-label>

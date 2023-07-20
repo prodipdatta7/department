@@ -8,6 +8,7 @@ function payloadForExamUpdate(req, res, next) {
         registrationCloseDate: req.body.registrationCloseDate,
         examCentre: req.body.examCentre,
         status: req.body.status,
+        examFees: req.body.examFees,
         courses: req.body.courses,
         registeredStudents: req.body.registeredStudents,
     };

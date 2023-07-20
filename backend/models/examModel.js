@@ -34,6 +34,10 @@ const examModel = mongoose.Schema(
             type: String,
             required: true,
         },
+        fees: {
+            type: Number,
+            required: true
+        },
         courses: [
             {
                 type: mongoose.SchemaTypes.ObjectId,

@@ -66,6 +66,7 @@ export class CreateExamComponent {
     initForm() {
         this.examForm = this.formBuilder.group({
             examName: ['', [Validators.required]],
+            examFees: ['', [Validators.required]],
             examDate: ['', Validators.required],
             registrationOpenDate: ['', [Validators.required]],
             registrationCloseDate: ['', [Validators.required]],
@@ -93,6 +94,9 @@ export class CreateExamComponent {
 
     public get ExamName(): FormControl {
         return this.examForm.get('examName') as FormControl;
+    }
+    public get ExamFees(): FormControl {
+        return this.examForm.get('examFees') as FormControl;
     }
 
     public get ExamDate(): FormControl {

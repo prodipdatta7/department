@@ -1,1 +1,24 @@
-<p>exam-payments works!</p>
+<div class="p-20 bg-main-color">
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+        <div fxLayoutAlign="center center" class="bg-color-white">
+            <span class="p-20 headline-5">Examination Payment Portal</span>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px" class="p-20 bg-color-white">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                <span class="subtitle-2">Exam Name: </span>
+                <span class="subtitle-2"> {{exam.examName}} </span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                <span class="subtitle-2">Student Name: </span>
+                <span class="subtitle-2"> {{user.name}} </span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                <span class="subtitle-2">Exam Fees: </span>
+                <span class="subtitle-2"> {{exam?.examFees || 3000}} </span>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" class="p-20 bg-color-white">
+            <button mat-raised-button color="primary" class="button-text" (click)="register()">Payment</button>
+        </div>
+    </div>
+</div>

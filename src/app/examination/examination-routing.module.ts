@@ -5,6 +5,7 @@ import { ExamDetailsComponent } from './components/exam-details/exam-details.com
 import { ExamRegistrationComponent } from './components/exam-registration/exam-registration.component';
 import { ExamPaymentsComponent } from './components/exam-payments/exam-payments.component';
 import {ExamRegistrationSuccessComponent} from "./components/exam-registration-success/exam-registration-success.component";
+import {ExamPaymentFailedComponent} from "./components/exam-payment-failed/exam-payment-failed.component";
 
 const routes: Routes = [
     {
@@ -20,12 +21,16 @@ const routes: Routes = [
         component: ExamRegistrationComponent,
     },
     {
-        path: 'details/:id/payments',
+        path: 'details/:id/registration/payment',
         component: ExamPaymentsComponent,
     },
     {
         path: 'details/:id/registration/successful',
         component: ExamRegistrationSuccessComponent
+    },
+    {
+        path: 'details/:id/registration/payment/failed',
+        component: ExamPaymentFailedComponent
     }
 ];
 

@@ -4,10 +4,12 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const stripe = require('stripe')('sk_test_51NVWxISFC5KjlFjgt6lfly5Y7BQVtoAMEAEfbCHlXGx4Pk4fgBqlf3jQBW7J0JOGRHcnsosq8sCpX4aP1yY9nTTg00SlKAJ78c');
 
 const app = express();
 dotenv.config();
 app.use(morgan("tiny"));
+app.use(express.static("public"));
 
 // database connection
 mongoose
@@ -42,6 +44,33 @@ app.use("/users", userRoutes);
 app.use("/courses", courseRoutes);
 app.use("/examinations", examRoutes);
 app.use("/user-exam-mapping", userExamMappingRoutes);
+
+
+app.post("/checkout", async (req, res, next) => {
+    console.log('payment body', req.body.info)
+    try {
+        const session = await stripe.checkout.sessions.create({
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'bdt',
+                        product_data: {
+                            name: req.body.name + '#' + req.body.id + '#' + req.body.examId,
+                        },
+                        unit_amount: req.body.fees
+                    },
+                    quantity: 1
+                }
+            ],
+            mode: 'payment',
+            success_url: `http://localhost:4200/examination/details/${req.body.examId}/registration/successful`,
+            cancel_url: `http://localhost:3000/cancel.html`,
+        });
+        res.status(200).json(session);
+    } catch (error ){
+        next(error)
+    }
+});
 
 const port = process.env.PORT;
 

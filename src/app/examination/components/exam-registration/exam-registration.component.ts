@@ -7,6 +7,8 @@ import {ExamService} from '../../services/exam.service';
 import {forkJoin} from 'rxjs';
 import {Location} from '@angular/common';
 import {map} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
+import {loadStripe} from "@stripe/stripe-js";
 
 @Component({
     selector: 'app-exam-registration',
@@ -17,7 +19,8 @@ export class ExamRegistrationComponent implements OnInit {
     userData: any;
     examData: any;
     dataLoaded = false;
-    submitted = false ;
+    submitted = false;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -25,8 +28,11 @@ export class ExamRegistrationComponent implements OnInit {
         private commonService: CommonService,
         private storageService: LocalStorageService,
         private examService: ExamService,
-        private location: Location
-    ) {}
+        private location: Location,
+        private http: HttpClient
+    ) {
+    }
+
     ngOnInit(): void {
         this.dataLoaded = false;
         const exam_id = this.route.snapshot.paramMap.get('id');
@@ -56,52 +62,62 @@ export class ExamRegistrationComponent implements OnInit {
     isValidUserInformation(): boolean {
         return this.userService.checkIfAllRequiredFieldExist(this.userData);
     }
+
     isUserAllowedToRegister(): boolean {
-        let validity = true ;
-        const userClass: string = this.userData.semester ;
-        const _class: any = this.examService.ExamNameMapping[userClass] ;
-        if(_class.year !== this.examData.year || _class.semester !== this.examData.semester) return false ;
+        let validity = true;
+        const userClass: string = this.userData.semester;
+        const _class: any = this.examService.ExamNameMapping[userClass];
+        if (_class.year !== this.examData.year || _class.semester !== this.examData.semester) return false;
         this.examData.courses.forEach((course: any) => {
-            const found = this.userData.courses.find((userCourse: any) => userCourse.courseCode === course.courseCode) ;
-            if(!found)validity = false ;
+            const found = this.userData.courses.find((userCourse: any) => userCourse.courseCode === course.courseCode);
+            if (!found) validity = false;
         });
-        return validity ;
+        return validity;
     }
+
     back() {
         this.location.back();
     }
 
-    register() {
+    onSubmit(): void {
         this.submitted = true ;
         if(this.isValidUserInformation() && this.isUserAllowedToRegister()) {
-            const examPayload = {
-                registeredStudents: [...this.examData.registeredStudents, this.userData._id]
-            };
-            const userPayload = {
-                participatedExams: [...this.userData.participatedExams, this.examData._id]
-            };
-            const subscriptions = [this.examService.registerUser(examPayload,this.examData._id), this.userService.registerInExam(userPayload, this.userData._id)];
-            forkJoin(subscriptions).pipe(map(([exam, user]) => {
-                const response = {
-                    success : exam.success && user.success
-                };
-                Object.assign(response, {examData: exam.exam});
-                Object.assign(response, {userData: user.data});
-                return response;
-            })).subscribe((response : any) => {
-                if(response?.success) {
-                    this.router.navigate(['./successful'], {
-                        relativeTo: this.route,
-                        queryParams: {
-                            userId: this.userData._id
-                        },
-                        queryParamsHandling: 'merge'
-                    }).then();
-                } else {
-                    this.commonService.openSnackbar('Something went wrong! Try again after some time...');
-                }
-                this.submitted = false;
-            })
+
         }
+        this.router.navigate(['./payment'], {relativeTo: this.route});
     }
+
+    // register() {
+    //     this.submitted = true ;
+    //     if(this.isValidUserInformation() && this.isUserAllowedToRegister()) {
+    //         const examPayload = {
+    //             registeredStudents: [...this.examData.registeredStudents, this.userData._id]
+    //         };
+    //         const userPayload = {
+    //             participatedExams: [...this.userData.participatedExams, this.examData._id]
+    //         };
+    //         const subscriptions = [this.examService.registerUser(examPayload,this.examData._id), this.userService.registerInExam(userPayload, this.userData._id)];
+    //         forkJoin(subscriptions).pipe(map(([exam, user]) => {
+    //             const response = {
+    //                 success : exam.success && user.success
+    //             };
+    //             Object.assign(response, {examData: exam.exam});
+    //             Object.assign(response, {userData: user.data});
+    //             return response;
+    //         })).subscribe((response : any) => {
+    //             if(response?.success) {
+    //                 this.router.navigate(['./successful'], {
+    //                     relativeTo: this.route,
+    //                     queryParams: {
+    //                         userId: this.userData._id
+    //                     },
+    //                     queryParamsHandling: 'merge'
+    //                 }).then();
+    //             } else {
+    //                 this.commonService.openSnackbar('Something went wrong! Try again after some time...');
+    //             }
+    //             this.submitted = false;
+    //         })
+    //     }
+    // }
 }
