@@ -51,7 +51,7 @@ export class ExamRegistrationSuccessComponent implements OnInit {
                 }
                 this.dataLoaded = true;
             });
-            this.prepareDataForPdf(examId, userId);
+            this.prepareDataForPdf(examId, id);
         } else {
             this.commonService.openSnackbar('Authentication failed! Login please.');
             this.router.navigate(['login']);

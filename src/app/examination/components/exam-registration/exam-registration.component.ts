@@ -6,9 +6,7 @@ import {UserService} from 'src/app/services/user.service';
 import {ExamService} from '../../services/exam.service';
 import {forkJoin} from 'rxjs';
 import {Location} from '@angular/common';
-import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {loadStripe} from "@stripe/stripe-js";
 
 @Component({
     selector: 'app-exam-registration',
@@ -86,38 +84,4 @@ export class ExamRegistrationComponent implements OnInit {
         }
         this.router.navigate(['./payment'], {relativeTo: this.route});
     }
-
-    // register() {
-    //     this.submitted = true ;
-    //     if(this.isValidUserInformation() && this.isUserAllowedToRegister()) {
-    //         const examPayload = {
-    //             registeredStudents: [...this.examData.registeredStudents, this.userData._id]
-    //         };
-    //         const userPayload = {
-    //             participatedExams: [...this.userData.participatedExams, this.examData._id]
-    //         };
-    //         const subscriptions = [this.examService.registerUser(examPayload,this.examData._id), this.userService.registerInExam(userPayload, this.userData._id)];
-    //         forkJoin(subscriptions).pipe(map(([exam, user]) => {
-    //             const response = {
-    //                 success : exam.success && user.success
-    //             };
-    //             Object.assign(response, {examData: exam.exam});
-    //             Object.assign(response, {userData: user.data});
-    //             return response;
-    //         })).subscribe((response : any) => {
-    //             if(response?.success) {
-    //                 this.router.navigate(['./successful'], {
-    //                     relativeTo: this.route,
-    //                     queryParams: {
-    //                         userId: this.userData._id
-    //                     },
-    //                     queryParamsHandling: 'merge'
-    //                 }).then();
-    //             } else {
-    //                 this.commonService.openSnackbar('Something went wrong! Try again after some time...');
-    //             }
-    //             this.submitted = false;
-    //         })
-    //     }
-    // }
 }
