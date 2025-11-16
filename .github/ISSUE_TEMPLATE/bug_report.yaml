@@ -41,14 +41,14 @@ body:
       required: true
 
   # Environment
-  - type: checkbox
+  - type: checkboxes
     id: environment
     attributes:
       label: Environment (*)
       options:
-        - ⚪ DEV
-        - 🟡 STAGE
-        - 🔴 PRODUCTION
+        - label: ⚪ DEV
+        - label: 🟡 STAGE
+        - label: 🔴 PRODUCTION
     validations:
       required: true
 
