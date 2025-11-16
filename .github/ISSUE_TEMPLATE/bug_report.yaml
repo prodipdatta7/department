@@ -21,9 +21,18 @@ body:
       label: Assignee
       multiple: true
       options:
-        - prodip-selise
-        - hafizsamrat
-        - dhimarsarkar
+        - Prodip Datta
+        - Hafizur Rahman
+        - Dhiman Sarkar
+        - Rashedul Islam
+        - Thouhidur Forkan
+        - Saiful Alam
+        - Golam Rabbani
+        - Amar Tanvee
+        - Sazia Afroz
+        - Sanjana Chowdhury
+        - Md Imon
+        - Nazmul Islam Hridoy
     validations:
       required: true
 
@@ -60,29 +69,18 @@ body:
       description: Select the affected module/submodule.
       multiple: true
       options:
+        - Day Planning
+          - Shifts
+          - Absences
+          - Checklists
+        - Monitor
         - Guide
-        - Authentication > OAuth
-        - Authentication > SSO
-        - Payments > Gateway
-        - Payments > Invoices
-        - Notifications > Email
-        - Notifications > SMS
+        - To-Do
+        - Training
+        - Configurator
+        - Workflow-Navi
     validations:
       required: true
-
-  # Visual summary (markdown only, shows at top of created issue)
-  - type: markdown
-    attributes:
-      value: |
-        ### 📌 Summary
-        | Field | Value |
-        |------:|:------|
-        | Priority | **${{ form.priority }}** |
-        | Environment | **${{ form.environment }}** |
-        | Module | **${{ form.module }}** |
-        | Preferred assignee | **${{ form.assignee }}** |
-
-        ---
 
   # Bug description
   - type: textarea
@@ -90,12 +88,6 @@ body:
     attributes:
       label: Bug description (*)
       placeholder: What happened? Include error messages and context.
-      value: |
-        **Current behavior**
-        - 
-
-        **Impact**
-        - 
     validations:
       required: true
 
@@ -104,10 +96,7 @@ body:
     id: expected-behavior
     attributes:
       label: Expected behavior (*)
-      placeholder: Describe what you expected to happen.
-      value: |
-        **Expected**
-        - 
+      placeholder: Describe what you expected to happen
     validations:
       required: true
 
@@ -129,7 +118,7 @@ body:
     id: reporter
     attributes:
       label: Reporter
-      placeholder: e.g., @prodipdatta7
+      placeholder: e.g., @john-doe
     validations:
       required: false
 
@@ -152,7 +141,7 @@ body:
     id: additional-info
     attributes:
       label: Additional supporting info (optional)
-      placeholder: Build number, commit SHA, feature flags, network conditions…
+      placeholder: console log, cUrl, payload, api endpoint, etc.
 
   # Optional sanity checks
   - type: checkboxes
@@ -160,6 +149,4 @@ body:
     attributes:
       label: Quick checks (optional)
       options:
-        - label: I reproduced this on the latest build
         - label: I cleared cache and tried again
-        - label: I checked similar open issues
