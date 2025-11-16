@@ -16,15 +16,14 @@ body:
         ---
 
   # Preferred assignee (cannot auto-assign, but helps triage)
-  - type: dropdown
+  - type: checkboxes
     id: assignee
     attributes:
       label: Assignee
       options:
-        -[ ] Unassigned
-        -[ ] prodip-selise
-        -[ ] octocat
-      default: 0
+        - prodip-selise
+        - hafizsamrat
+        - dhimarsarkar
     validations:
       required: true
 
@@ -42,15 +41,14 @@ body:
       required: true
 
   # Environment
-  - type: dropdown
+  - type: checkboxes
     id: environment
     attributes:
       label: Environment (*)
       options:
-        -[ ] ⚪ DEV
-        -[ ] 🟡 STAGE
-        -[ ] 🔴 PRODUCTION
-      default: 0
+        - ⚪ DEV
+        - 🟡 STAGE
+        - 🔴 PRODUCTION
     validations:
       required: true
 
