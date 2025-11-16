@@ -20,13 +20,14 @@ body:
       label: Preferred assignee
       description: This will not auto-assign. Triage will assign accordingly.
       options:
+        - Unassigned
         - prodip-selise
         - hafizsamrat
         # Add your team's GitHub handles below
         # - alice
         # - bob
         # - charlie
-      default: Unassigned
+      default: 0
     validations:
       required: true
 
