@@ -2,7 +2,7 @@ name: Bug Report
 description: File a bug report
 title: "[Bug]: "
 labels:
-  - Bug
+  - bug
 assignees:
   - octocat
 
@@ -10,33 +10,29 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
-        Please complete the fields below in order.
+        ## 🐞 Bug Report
+        Please provide the details below. Fields marked with (*) are required.
 
-  # 1) Assignee name (preferred)
+        ---
+
+  # Preferred assignee (cannot auto-assign, but helps triage)
   - type: dropdown
     id: assignee
     attributes:
-      label: Preferred assignee
-      description: This will not auto-assign. Triage will assign accordingly.
+      label: Assignee
       options:
-        - Unassigned
-        - prodip-selise
-        - hafizsamrat
-        # Add your team's GitHub handles below
-        # - alice
-        # - bob
-        # - charlie
+        -[ ] Unassigned
+        -[ ] prodip-selise
+        -[ ] octocat
       default: 0
     validations:
       required: true
 
-  # 2) Priority with color-like emojis
+  # Priority
   - type: dropdown
     id: priority
     attributes:
-      label: Priority
-      description: Choose the urgency of the fix.
+      label: Priority (*)
       options:
         - 🟢 LOW
         - 🟠 MEDIUM
@@ -45,106 +41,128 @@ body:
     validations:
       required: true
 
-  # 3) Environment (dev, stage, production) with color-like emojis
+  # Environment
   - type: dropdown
     id: environment
     attributes:
-      label: Environment
-      description: Where did you observe the issue?
+      label: Environment (*)
       options:
-        - ⚪ DEV
-        - 🟡 STAGE
-        - 🔴 PRODUCTION
+        -[ ] ⚪ DEV
+        -[ ] 🟡 STAGE
+        -[ ] 🔴 PRODUCTION
+      default: 0
     validations:
       required: true
 
-  # 4) Module selection with optional submodules, default "None"
+  # Module/Submodule
   - type: dropdown
     id: module
     attributes:
       label: Module
       description: Select the affected module/submodule.
       options:
-        - Unassigned
-        # Example structure: "Module > Submodule"
-        - Day Planning > Shifts
-        - Day Planning > Absences
-        - Day Planning > Checklists
-        - Monitor
+        - None
         - Guide
-        - To-Do
-        - Training
-        - Configurator
-        # Add all project modules and submodules above
+        - Authentication > OAuth
+        - Authentication > SSO
+        - Payments > Gateway
+        - Payments > Invoices
+        - Notifications > Email
+        - Notifications > SMS
       default: 0
     validations:
       required: true
 
-  # 5) Bug description (details of the bug)
+  # Visual summary (markdown only, shows at top of created issue)
+  - type: markdown
+    attributes:
+      value: |
+        ### 📌 Summary
+        | Field | Value |
+        |------:|:------|
+        | Priority | **${{ form.priority }}** |
+        | Environment | **${{ form.environment }}** |
+        | Module | **${{ form.module }}** |
+        | Preferred assignee | **${{ form.assignee }}** |
+
+        ---
+
+  # Bug description
   - type: textarea
     id: bug-description
     attributes:
-      label: Bug description
-      description: Provide a clear and concise description of the bug.
+      label: Bug description (*)
       placeholder: What happened? Include error messages and context.
+      value: |
+        **Current behavior**
+        - 
+
+        **Impact**
+        - 
     validations:
       required: true
 
-  # 6) Expected behavior
+  # Expected behavior
   - type: textarea
     id: expected-behavior
     attributes:
-      label: Expected behavior
-      description: Describe what you expected to happen.
-      placeholder: The expected behavior is...
+      label: Expected behavior (*)
+      placeholder: Describe what you expected to happen.
+      value: |
+        **Expected**
+        - 
     validations:
       required: true
 
-  # 7) Recreation steps (if needed)
+  # Repro steps
   - type: textarea
     id: reproduction-steps
     attributes:
       label: Steps to reproduce (if needed)
-      description: Step-by-step instructions to reproduce the issue.
-      placeholder: |
-        1. Go to ...
-        2. Click on ...
-        3. Observe ...
+      description: Keep it short; use a numbered list.
+      value: |
+        1. Go to …
+        2. Click …
+        3. Observe …
     validations:
       required: false
 
-  # 8) Reporter name
+  # Reporter
   - type: input
     id: reporter
     attributes:
-      label: Reporter name
-      description: Your name or GitHub username.
-      placeholder: e.g., @your-handle
+      label: Reporter
+      placeholder: e.g., @prodipdatta7
     validations:
       required: false
 
-  # 9) Additional media attach options (links + guidance)
+  # Attachments guidance + links
   - type: markdown
     attributes:
       value: |
-        ### Attachments
-        You can drag-and-drop screenshots, videos, and log files into the issue body **after submission**.
-        If the files are hosted elsewhere, paste their links below.
+        **Attachments**
+        - Drag & drop screenshots, videos, and logs **after submitting**.
+        - Or paste links below.
+
   - type: textarea
     id: attachments-links
     attributes:
       label: Links to media/logs (optional)
-      description: Paste URLs to screenshots, videos, or logs.
-      placeholder: https://example.com/screenshot.png
-    validations:
-      required: false
+      placeholder: https://… (Drive, OneDrive, S3, etc.)
 
-  # 10) Additional supporting info (if needed)
+  # Additional info
   - type: textarea
     id: additional-info
     attributes:
       label: Additional supporting info (optional)
-      description: Any other relevant details (build numbers, commit hashes, feature flags, etc.).
-      placeholder: Add any extra context here.
-    validations:
-      required: false
+      placeholder: Build number, commit SHA, feature flags, network conditions…
+
+  # Optional sanity checks
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Quick checks (optional)
+      options:
+        - label: I reproduced this on the latest build
+        - label: I cleared cache and tried again
+        - label: I checked similar open issues
