@@ -41,7 +41,7 @@ body:
         - 🟢 LOW
         - 🟠 MEDIUM
         - 🔴 HIGH
-      default: 🟢 LOW
+      default: 0
     validations:
       required: true
 
@@ -76,7 +76,7 @@ body:
         - Training
         - Configurator
         # Add all project modules and submodules above
-      default: None
+      default: 0
     validations:
       required: true
 
