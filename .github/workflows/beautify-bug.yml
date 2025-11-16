@@ -9,72 +9,22 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Parse Issue Form into JSON
+      - name: Parse issue form
         id: parse
         uses: edumserrano/github-issue-forms-parser@v1
         with:
           template-filepath: '.github/ISSUE_TEMPLATE/bug_report.yaml'
-          issue-form-body: '${{ github.event.issue.body }}'
-
-      - name: Comment + labels from parsed JSON
+          issue-form-body: '${{ github.event.issue.body }}'   # <-- form body
+      - name: Comment summary
         uses: actions/github-script@v7
         env:
           PARSED: '${{ steps.parse.outputs.parsed-issue }}'
         with:
           script: |
-            const parsed = JSON.parse(process.env.PARSED);
-
-            // IDs are your form element "id" values
-            const assigneesSelected = parsed['assignee'] || [];
-            const modulesSelected = parsed['module'] || [];
-            const env = parsed['environment'] || {}; // checkboxes => { selected: [...], unselected: [...] }
-            const envSelected = env.selected || [];
-            const priority = (parsed['priority'] || [])[0] || '';
-
-            const priMap = { '🔴 HIGH':'high','🟠 MEDIUM':'medium','🟢 LOW':'low' };
-            const envMap = { '🔴 PRODUCTION':'production','🟡 STAGE':'stage','⚪ DEV':'dev' };
-
-            const priKey = Object.keys(priMap).find(k => priority.includes(k));
-            const envKeys = Object.keys(envMap).filter(k => envSelected.some(v => v.includes(k)));
-
-            const colorForPriority = (p) => p==='high' ? 'd0021b' : p==='medium' ? 'f5a623' : '2ecc71';
-            const colorForEnv = (e) => e==='production' ? 'd0021b' : e==='stage' ? 'f4d03f' : '8e8e93';
-
-            const priBadge = priKey
-              ? `!priority}-${colorForPriority(priMap[priKey])})`
-              : '';
-
-            const envBadges = envKeys.map(k =>
-              `![env](https://img.shnvMap[k])})`
-            ).join(' ');
-
-            const title = context.payload.issue.title.replace(/^\[Bug\]:\s*/i, '');
-            const summaryList = (arr) => Array.isArray(arr) && arr.length ? arr.join(', ') : '_None_';
-
-            const comment = `
-            ## 🐞 ${title}
-
-            ${priBadge} ${envBadges}
-
-            **Modules:** ${summaryList(modulesSelected)}  
-            **Preferred assignees:** ${summaryList(assigneesSelected)}
-            `;
-
-            // Post comment
-            await github.rest.issues.createComment({
-              ...context.repo,
-              issue_number: context.payload.issue.number,
-              body: comment
-            });
-
-            // Apply labels
-            const labelsToAdd = [];
-            if (priKey) labelsToAdd.push(`priority: ${priMap[priKey]}`);
-            for (const k of envKeys) labelsToAdd.push(`env: ${envMap[k]}`);
-            if (labelsToAdd.length) {
-              await github.rest.issues.addLabels({
-                ...context.repo,
-                issue_number: context.payload.issue.number,
-                labels: labelsToAdd
-              });
-            }
+            const data = JSON.parse(process.env.PARSED);
+            const pri = (data.priority || [])[0] || '_None_';
+            const envSel = (data.environment && data.environment.selected) || [];
+            const mods = data.module || [];
+            const assigs = data.assignee || [];
+            const body = `**Priority:** ${pri}\n**Env:** ${envSel.join(', ') || '_None_'}\n**Modules:** ${mods.join(', ') || '_None_'}\n**Assignees:** ${assigs.join(', ') || '_None_'}\n`;
+            await github.rest.issues.createComment({ ...context.repo, issue_number: context.payload.issue.number, body });
