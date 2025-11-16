@@ -23,10 +23,10 @@ jobs:
               return m ? m[1].trim() : ''
             }
 
-            const priority = get('Priority') || ''
-            const environment = get('Environment') || ''
-            const module = get('Module') || 'None'
-            const assigneePref = get('Preferred assignee') || 'Unassigned'
+            const priority = get('priority') || ''
+            const environment = get('environment') || ''
+            const module = get('module') || 'None'
+            const assigneePref = get('assignee') || 'Unassigned'
 
             // Map to labels + shield colors
             const priMap = { '🔴 HIGH':'high','🟠 MEDIUM':'medium','🟢 LOW':'low' }
