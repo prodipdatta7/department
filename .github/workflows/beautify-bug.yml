@@ -9,22 +9,54 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Parse issue form
-        id: parse
-        uses: edumserrano/github-issue-forms-parser@v1
-        with:
-          template-filepath: '.github/ISSUE_TEMPLATE/bug_report.yaml'
-          issue-form-body: '${{ github.event.issue.body }}'   # <-- form body
-      - name: Comment summary
+      - name: Always comment (baseline)
         uses: actions/github-script@v7
-        env:
-          PARSED: '${{ steps.parse.outputs.parsed-issue }}'
         with:
           script: |
-            const data = JSON.parse(process.env.PARSED);
-            const pri = (data.priority || [])[0] || '_None_';
-            const envSel = (data.environment && data.environment.selected) || [];
-            const mods = data.module || [];
-            const assigs = data.assignee || [];
-            const body = `**Priority:** ${pri}\n**Env:** ${envSel.join(', ') || '_None_'}\n**Modules:** ${mods.join(', ') || '_None_'}\n**Assignees:** ${assigs.join(', ') || '_None_'}\n`;
-            await github.rest.issues.createComment({ ...context.repo, issue_number: context.payload.issue.number, body });
+            const issue = context.payload.issue;
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issue.number,
+              body: `✅ Workflow running for **#${issue.number}**: "${issue.title}"`
+            });
+
+      - name: Parse and beautify
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || "";
+
+            const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const section = (label) => {
+              const re = new RegExp(`(^|\\n)###\\s+${esc(label)}\\s*\\n([\\s\\S]*?)(?=\\n###\\s|$)`);
+              const m = body.match(re);
+              return m ? m[2].trim() : '';
+            };
+
+            const priText = section('Priority (*)') || section('Priority');
+            const envText = section('Environment (*)') || section('Environment');
+            const moduleText = section('Module');
+            const assigneeText = section('Assignee') || section('Preferred assignee');
+
+            const parseLines = (t) => t.split('\n').map(s => s.trim()).filter(Boolean);
+            const parseCheckboxSelected = (t) => [...t.matchAll(/-\s\[[xX]\]\s(.+)/g)].map(m => m[1].trim());
+
+            const priority = parseLines(priText)[0] || '_None_';
+            const envSelected = parseCheckboxSelected(envText);
+            const modulesSelected = parseLines(moduleText);
+            const assigneesSelected = parseLines(assigneeText);
+
+            const comment = `
+            ### 🧾 Summary
+            - **Priority:** ${priority}
+            - **Environment:** ${envSelected.join(', ') || '_None_'}
+            - **Modules:** ${modulesSelected.join(', ') || '_None_'}
+            - **Assignees:** ${assigneesSelected.join(', ') || '_None_'}
+            `;
+
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issue.number,
+              body: comment
+            });
