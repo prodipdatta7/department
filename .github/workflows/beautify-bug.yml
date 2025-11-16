@@ -9,89 +9,72 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Format summary comment
+      - name: Parse Issue Form into JSON
+        id: parse
+        uses: edumserrano/github-issue-forms-parser@v1
+        with:
+          template-filepath: '.github/ISSUE_TEMPLATE/bug_report.yaml'
+          issue-form-body: '${{ github.event.issue.body }}'
+
+      - name: Comment + labels from parsed JSON
         uses: actions/github-script@v7
+        env:
+          PARSED: '${{ steps.parse.outputs.parsed-issue }}'
         with:
           script: |
-            const issue = context.payload.issue
-            const body = issue.body || ""
+            const parsed = JSON.parse(process.env.PARSED);
 
-            // naive parsing of form fields from issue body (field headings)
-            const get = (label) => {
-              const re = new RegExp(`\\n${label}\\n\\n([\\s\\S]*?)(\\n\\n[A-Z]|$)`)
-              const m = body.match(re)
-              return m ? m[1].trim() : ''
-            }
+            // IDs are your form element "id" values
+            const assigneesSelected = parsed['assignee'] || [];
+            const modulesSelected = parsed['module'] || [];
+            const env = parsed['environment'] || {}; // checkboxes => { selected: [...], unselected: [...] }
+            const envSelected = env.selected || [];
+            const priority = (parsed['priority'] || [])[0] || '';
 
-            const priority = get('priority') || ''
-            const environment = get('environment') || ''
-            const module = get('module') || 'None'
-            const assigneePref = get('assignee') || 'Unassigned'
+            const priMap = { '🔴 HIGH':'high','🟠 MEDIUM':'medium','🟢 LOW':'low' };
+            const envMap = { '🔴 PRODUCTION':'production','🟡 STAGE':'stage','⚪ DEV':'dev' };
 
-            // Map to labels + shield colors
-            const priMap = { '🔴 HIGH':'high','🟠 MEDIUM':'medium','🟢 LOW':'low' }
-            const envMap = { '🔴 PRODUCTION':'production','🟡 STAGE':'stage','⚪ DEV':'dev' }
+            const priKey = Object.keys(priMap).find(k => priority.includes(k));
+            const envKeys = Object.keys(envMap).filter(k => envSelected.some(v => v.includes(k)));
 
-            const priKey = Object.keys(priMap).find(k => priority.includes(k)) || ''
-            const envKey = Object.keys(envMap).find(k => environment.includes(k)) || ''
+            const colorForPriority = (p) => p==='high' ? 'd0021b' : p==='medium' ? 'f5a623' : '2ecc71';
+            const colorForEnv = (e) => e==='production' ? 'd0021b' : e==='stage' ? 'f4d03f' : '8e8e93';
 
-            const priLabel = priKey ? `priority: ${priMap[priKey]}` : null
-            const envLabel = envKey ? `env: ${envMap[envKey]}` : null
-
-            // Create shields (colors are examples)
             const priBadge = priKey
-              ? `!priority}-${priMap[priKey]==='high'?'d0021b':priMap[priKey]==='medium'?'f5a623':'2ecc71'})`
-              : ''
-            const envBadge = envKey
-              ? `!environment}-${envMap[envKey]==='production'?'d0021b':envMap[envKey]==='stage'?'f4d03f':'8e8e93'})`
-              : ''
+              ? `!priority}-${colorForPriority(priMap[priKey])})`
+              : '';
 
-            // Build fancy comment
-            const title = issue.title.replace(/\\[Bug\\]:\\s*/, '')
+            const envBadges = envKeys.map(k =>
+              `![env](https://img.shnvMap[k])})`
+            ).join(' ');
+
+            const title = context.payload.issue.title.replace(/^\[Bug\]:\s*/i, '');
+            const summaryList = (arr) => Array.isArray(arr) && arr.length ? arr.join(', ') : '_None_';
+
             const comment = `
             ## 🐞 ${title}
 
-            ${priBadge} ${envBadge}
+            ${priBadge} ${envBadges}
 
-            **Module:** ${module}  
-            **Preferred assignee:** ${assigneePref}
-
-            <details><summary><b>Bug description</b></summary>
-
-            ${get('Bug description')}
-
-            </details>
-
-            <details><summary><b>Expected behavior</b></summary>
-
-            ${get('Expected behavior')}
-
-            </details>
-
-            <details><summary><b>Steps to reproduce</b></summary>
-
-            ${get('Steps to reproduce (if needed)') || '_No response_'}
-
-            </details>
-
-            **Reporter:** ${get('Reporter') || '_No response_'}  
-            **Attachments:** ${get('Links to media/logs (optional)') || '_No response_'}  
-            **Additional info:** ${get('Additional supporting info (optional)') || '_No response_'}
-            `
+            **Modules:** ${summaryList(modulesSelected)}  
+            **Preferred assignees:** ${summaryList(assigneesSelected)}
+            `;
 
             // Post comment
             await github.rest.issues.createComment({
               ...context.repo,
-              issue_number: issue.number,
+              issue_number: context.payload.issue.number,
               body: comment
-            })
+            });
 
             // Apply labels
-            const labelsToAdd = [priLabel, envLabel].filter(Boolean)
+            const labelsToAdd = [];
+            if (priKey) labelsToAdd.push(`priority: ${priMap[priKey]}`);
+            for (const k of envKeys) labelsToAdd.push(`env: ${envMap[k]}`);
             if (labelsToAdd.length) {
               await github.rest.issues.addLabels({
                 ...context.repo,
-                issue_number: issue.number,
+                issue_number: context.payload.issue.number,
                 labels: labelsToAdd
-              })
+              });
             }
