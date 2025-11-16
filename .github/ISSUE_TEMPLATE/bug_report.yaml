@@ -7,18 +7,19 @@ assignees:
   - octocat
 
 body:
-  # - type: markdown
-  #   attributes:
-  #     value: |
-  #       ## 🐞 Bug Report
-  #       Please provide the details below. Fields marked with (*) are required.
-  #       ---
+  - type: markdown
+    attributes:
+      value: |
+        ## 🐞 Bug Report
+        Please provide the details below. Fields marked with (*) are required.
+        ---
 
   # Preferred assignee (cannot auto-assign, but helps triage)
-  - type: checkboxes
+  - type: dropdown
     id: assignee
     attributes:
       label: Assignee
+      multiple: true
       options:
         - prodip-selise
         - hafizsamrat
