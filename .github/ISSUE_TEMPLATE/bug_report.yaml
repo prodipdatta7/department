@@ -58,8 +58,8 @@ body:
     attributes:
       label: Module
       description: Select the affected module/submodule.
+      multiple: true
       options:
-        - None
         - Guide
         - Authentication > OAuth
         - Authentication > SSO
@@ -67,7 +67,6 @@ body:
         - Payments > Invoices
         - Notifications > Email
         - Notifications > SMS
-      default: 0
     validations:
       required: true
 
