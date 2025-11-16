@@ -65,7 +65,7 @@ body:
       label: Module
       description: Select the affected module/submodule.
       options:
-        - None
+        - Unassigned
         # Example structure: "Module > Submodule"
         - Day Planning > Shifts
         - Day Planning > Absences
