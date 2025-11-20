@@ -40,3 +40,18 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# .NET build output and user files
+dotnet-backend-api/bin/
+dotnet-backend-api/obj/
+dotnet-backend-api/*.user
+dotnet-backend-api/*.suo
+dotnet-backend-api/*.userosscache
+dotnet-backend-api/*.sln.docstates
+dotnet-backend-api/.vs/
+
+# Visual Studio global
+.vs/
+
+# Backend generated files
+backend/pdf-files/
